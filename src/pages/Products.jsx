@@ -3,6 +3,8 @@ import axios from 'axios'
 import Navbar from '../components/Navbar/Navbar'
 import { Link } from 'react-router-dom'
 import { IoMdSearch } from 'react-icons/io'
+import { TiArrowSortedDown } from "react-icons/ti";
+
 import Footer from '../components/Footer/Footer'
 const Products = () => {
     const [response, setResponse] = useState([])
@@ -10,6 +12,7 @@ const Products = () => {
   const [category, setCategory] = useState('');
   const [price, setPrice] = useState('0');
   const [page, setPage] = useState(1);
+  const [hover, setHover] = useState(false);
 
     const [orderPopup, setOrderPopup] = React.useState(false);
 
@@ -57,7 +60,7 @@ const handlePrevious = async(e) => {
 useEffect(() => {
         const fetchData = async () => {
             try {
-                console.log(await axios.get(`http://localhost:3000/app/products/d06e1002-b9e2-407a-9a49-914bd1e3c275`))
+                
                 const res = await axios.get(`http://localhost:3000/app/products/?search=&category=${category}&price=${price}&page=${page}`);
                 setResponse(res.data.products);
                 setColors(res.data.colors);
@@ -69,20 +72,25 @@ useEffect(() => {
 
         fetchData();
     }, []); 
-// console.log(response)
-// console.log(colors)
+
+// console.log(response.length)
 
   return (
    <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden">
     <Navbar handleOrderPopup={handleOrderPopup} />
-    <div className='flex py-10'>
-      <div className='w-1/6 mx-10 mt-4 relative'>
-        <div className='absolute bg-slate-300 w-[1px] h-[400px] right-0 top-5'></div>
+    <div className='lg:flex py-2 md:py-10'>
+      <div className='bg-primary m-5 font-bold flex justify-between text-lg lg:hidden py-2 px-5 rounded-sm cursor-pointer' 
+      onClick={()=>setHover(!hover)}>
+        <p>Filter</p>
+      <TiArrowSortedDown className={`mt-1 text-2xl ${hover && 'rotate-180'}`} />
+      </div>
+      <div className={`lg:w-1/6 mx-10 mt-4 relative lg:block ${hover ? 'block border-white' : 'hidden'}`}>
+        <div className='hidden lg:block absolute bg-slate-300 w-[1px] h-[400px] right-0 top-5'></div>
         
         <form onSubmit = {handleSubmit}>
-          <div className='m-3 mb-5 font-bold text-lg'>Filter</div>
+          <div className='m-3 mb-5 font-bold text-lg' >Filter</div>
         <div className='m-3'>Categories</div>
-        <div className="relative group hidden sm:block">
+        <div className="relative group ">
               <input
                 type="text"
                 placeholder="Search"
@@ -91,7 +99,7 @@ useEffect(() => {
               "
               onChange={(e) => setCategory(e.target.value)}
               />
-              <IoMdSearch className="text-xl text-gray-600 group-hover:text-primary dark:text-gray-400 absolute top-1/2 -translate-y-1/2 right-5 duration-200" />
+              <IoMdSearch className="text-xl text-gray-600 group-hover:text-primary dark:text-gray-400 absolute top-1/2 -translate-y-1/2 left-[180px] duration-200" />
         </div>
         
         <div className='m-3'>Price</div>
@@ -110,8 +118,7 @@ useEffect(() => {
       </div>
       
 
-      
-      <div className='grid grid-cols-3 m-4'>
+      <div className='grid md:grid-cols-3 m-4'>
       {
         response.map(product => 
         <Link className=' min-w-[200px] h-[300px] mx-3 dark:bg-[#333C4E] bg-[#e6e6e6] rounded-md cursor-pointer mb-5' to={`/Product-page/${product.id}`}>
@@ -135,11 +142,11 @@ useEffect(() => {
     
     </div>
     </div>
-    <div className='text-white flex space-x-10 ml-[600px] mb-10'>
+    <div className='text-white flex space-x-10 lg:ml-[600px] ml-10 mb-10'>
       <button className='disabled:opacity-50 bg-secondary px-10 py-1 rounded-md'
        disabled={page == 1} onClick ={handlePrevious} >Previous</button>
       <button className='disabled:opacity-50 bg-secondary px-10 py-1 rounded-md'
-       disabled={Products.length < 21} onClick ={handleNext}>Next</button> 
+       disabled={response.length < 9 } onClick ={handleNext}>Next</button> 
     </div>
     <Footer/>
     </div>

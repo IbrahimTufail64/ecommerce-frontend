@@ -18,8 +18,9 @@ const LoginForm = () => {
         }).then(function (response) {
         //   setUser(response.data.user);
         console.log(response.data);
-        localStorage.setItem("userName", response.data.name);
+        localStorage.setItem("UserName", response.data.name);
         localStorage.setItem("Email", Email);
+        localStorage.setItem("Address", response.data.address);
         localStorage.setItem("token", response.data.token);
           alert("Login successful");
           navigate("/");

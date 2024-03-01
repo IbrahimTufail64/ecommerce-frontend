@@ -2,6 +2,7 @@ import React from "react";
 import { IoMdSearch } from "react-icons/io";
 import { FaCaretDown, FaCartShopping } from "react-icons/fa6";
 import DarkMode from "./DarkMode";
+import { useNavigate } from "react-router-dom";
 
 const MenuLinks = [
   {
@@ -12,12 +13,7 @@ const MenuLinks = [
   {
     id: 2,
     name: "Shop",
-    link: "/#shop",
-  },
-  {
-    id: 3,
-    name: "About",
-    link: "/#about",
+    link: "/Products",
   },
   {
     id: 4,
@@ -29,21 +25,22 @@ const MenuLinks = [
 const DropdownLinks = [
   {
     id: 1,
-    name: "Trending Products",
-    link: "/#",
+    name: "Account",
+    link: "/Account",
   },
   {
     id: 2,
-    name: "Best Selling",
-    link: "/#",
+    name: "Cart",
+    link: "/Account",
   },
   {
     id: 3,
-    name: "Top Rated",
-    link: "/#",
+    name: "Orders",
+    link: "/Account",
   },
 ];
 const Navbar = ({ handleOrderPopup }) => {
+  const navigate = useNavigate();
   return (
     <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 relative z-40">
       <div className="py-4">
@@ -57,14 +54,20 @@ const Navbar = ({ handleOrderPopup }) => {
             >
               Eshop
             </a>
+            <a
+              onClick={()=>{navigate('/Login')}}
+              className={`${localStorage.getItem('Email') ? 'hidden': ' px-4'} inline-block cursor-pointer font-semibold text-gray-500 hover:text-black dark:hover:text-white duration-200`}
+            >
+              Login
+            </a>
             {/* Menu Items */}
             <div className="hidden lg:block">
               <ul className="flex items-center gap-4">
                 {MenuLinks.map((data, index) => (
                   <li key={index}>
                     <a
-                      href={data.link}
-                      className="inline-block px-4 font-semibold text-gray-500 hover:text-black dark:hover:text-white duration-200"
+                      onClick={()=>{navigate(data.link)}}
+                      className="inline-block cursor-pointer px-4 font-semibold text-gray-500 hover:text-black dark:hover:text-white duration-200"
                     >
                       {" "}
                       {data.name}
@@ -72,12 +75,12 @@ const Navbar = ({ handleOrderPopup }) => {
                   </li>
                 ))}
                 {/* Dropdown  */}
-                <li className="relative cursor-pointer group">
+                <li className={`relative cursor-pointer group ${!localStorage.getItem("Email")&& 'hidden'}`}>
                   <a
-                    href="#"
+                    href="/Account"
                     className="flex items-center gap-[2px] font-semibold text-gray-500 dark:hover:text-white py-2"
                   >
-                    Quick Links
+                    Profile
                     <span>
                       <FaCaretDown className="group-hover:rotate-180 duration-300" />
                     </span>
@@ -89,8 +92,8 @@ const Navbar = ({ handleOrderPopup }) => {
                       {DropdownLinks.map((data, index) => (
                         <li>
                           <a
-                            className="text-gray-500  dark:hover:text-white duration-200 inline-block w-full p-2 hover:bg-primary/20 rounded-md font-semibold"
-                            href={data.link}
+                            className="text-gray-500 cursor-pointer dark:hover:text-white duration-200 inline-block w-full p-2 hover:bg-primary/20 rounded-md font-semibold"
+                            onClick={()=>{navigate(data.link)}}
                           >
                             {data.name}
                           </a>
@@ -105,23 +108,13 @@ const Navbar = ({ handleOrderPopup }) => {
 
           {/* Navbar Right section */}
           <div className="flex justify-between items-center gap-4">
-            {/* Search Bar section */}
-            <div className="relative group hidden sm:block">
-              <input
-                type="text"
-                placeholder="Search"
-                className="
-              search-bar
-              "
-              />
-              <IoMdSearch className="text-xl text-gray-600 group-hover:text-primary dark:text-gray-400 absolute top-1/2 -translate-y-1/2 right-3 duration-200" />
-            </div>
+            
 
             {/* Order-button section */}
-            <button className="relative p-3" onClick={handleOrderPopup}>
+            <button className={`relative p-3 ${!localStorage.getItem("Email")&& 'hidden'}`} onClick={()=>{handleOrderPopup; navigate('/Account')}}>
               <FaCartShopping className="text-xl text-gray-600 dark:text-gray-400" />
               <div className="w-4 h-4 bg-red-500 text-white rounded-full absolute top-0 right-0 flex items-center justify-center text-xs">
-                4
+                {localStorage.getItem('CartSize') ? localStorage.getItem('CartSize'): 0}
               </div>
             </button>
             {/* Dark Mode section */}

@@ -23,7 +23,7 @@ const LoginForm = () => {
         localStorage.setItem("Address", response.data.address);
         localStorage.setItem("token", response.data.token);
           alert("Login successful");
-          navigate("/");
+          navigate("/Account");
         })
         .catch(function (error) {
           console.log(error);

@@ -4,32 +4,18 @@ import Footer from '../components/Footer/Footer'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ProductBanner from '../components/CartProduct/ProductBanner';
+import ProductBannerWishlist from '../components/WishlistProduct/ProductBannerWishlist';
 
 const AccountPage = () => {
   const [orderPopup, setOrderPopup] = React.useState(false);
   const [UserName, setUserName] =  useState(localStorage.getItem('UserName')); 
   const [Email, setEmail] =  useState(localStorage.getItem('Email')); 
   const [Address, setAddress] =  useState(localStorage.getItem('Address')); 
+  const [wishlist, setWishlist] =  useState([]); 
   const [sum,setSum] = useState(0);
   const [orderinfo,setOrderinfo] = useState([]);
   const [cart,setCart] = useState([
-    {
-            specs: {
-              specs: "sample data",
-              price: 0
-            },
-            color: {
-                color: "black",
-                item_count: 0,
-                imageuri: "Sample Data"
-            },
-            itemcount: 1,
-            Product: {
-                name: "sample data",
-                price: 100,
-                desc: "Sample data",
-            }
-        }
+
   ]);
 
   const navigate = useNavigate();
@@ -46,11 +32,22 @@ useEffect(()=>{
     }
   }
 ).then(e => setCart(e.data.cart))
-console.log(cart);
+
+
+    await axios.get(
+  "http://localhost:3000/app/wishlist",
+  {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    }
+  }
+).then(e => setWishlist(e.data.wishlist))
+localStorage.setItem('CartSize',wishlist.length);
+console.log(wishlist);
   }
   catch(e){
     console.log(e);
-    navigate('/Login');
+    // navigate('/Login');
   }
   }
   fetchCart();
@@ -163,8 +160,16 @@ console.log(cart);
                 Checkout
             </button>
       </div>
-      {cart.map(e=>{ 
+      {cart.length>0 && cart.map(e=>{ 
         return <ProductBanner props={{props:e}} sum={sum} setSum={setSum} orderinfo={orderinfo} setOrderinfo={setOrderinfo}/>
+      })}
+    </div>
+
+
+    <div className='px-10'>
+      <div className='text-4xl font-semibold text-primary mb-5 mt-16'>Wishlist</div>
+      {wishlist.length > 0 && wishlist.map(e=>{ 
+        return <ProductBannerWishlist prop={e}/>
       })}
     </div>
 

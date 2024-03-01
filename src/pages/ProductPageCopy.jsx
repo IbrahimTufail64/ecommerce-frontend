@@ -69,7 +69,21 @@ const changespec = (ID)=>{
         setCount(count-1);
     }
   }
-  const AddtoCart= async()=>{
+
+const AddtoWishlist = async()=>{
+try{
+    const res = await axios.get(`http://localhost:3000/app/add-to-wishlist/${id}`,{
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        });
+        console.log(res.data);
+        alert("Product Added to wishlist");
+}
+catch(err){throw new Error(err);}
+}
+
+const AddtoCart= async()=>{
 
 try{
     const res = await axios.get(`http://localhost:3000/app/add-to-cart/${id}?count=${count}&color=${colors.color}&specs=${specs.specs}`,{
@@ -80,14 +94,14 @@ try{
         console.log(res.data);
         alert("Product Added to cart");
 }
-catch(err){alert("An Error occured while trying to add to cart");throw new Error(err);}
+catch(err){throw new Error(err);}
 
   }
     colors  = colorsArr[0];
         
     specs = specsArr[0];
   return (
-    <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden relative md:h-[800px]">
+    <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden relative md:h-[1000px]">
     <Navbar handleOrderPopup={handleOrderPopup} />
     {response && 
     <div className='md:flex m-5'>
@@ -124,9 +138,9 @@ catch(err){alert("An Error occured while trying to add to cart");throw new Error
             <div className='text-2xl font-medium dark:text-white relative pl-3 mb-20'>
                 <span className='text-sm absolute left-0'>$</span>{specs.price ? specs.price : response.price}</div>
             <button className='disabled:opacity-50 bg-secondary px-10 py-2 rounded-[2px] text-white font-light text-xl space-x-8 mt-20'
-        onClick ={AddtoCart} disabled={colors.item_count==0}><span>Add to Cart</span> <FaShoppingCart  className='inline text-xl' /></button>
+        onClick ={()=>{AddtoCart()}} disabled={colors.item_count==0}><span>Add to Cart</span> <FaShoppingCart  className='inline text-xl' /></button>
             <button className='disabled:opacity-50 bg-secondary px-5 py-2 rounded-[2px] text-white font-light text-xl space-x-8 ml-2'
-        onClick ={console.log("clicked")} disabled={colors.item_count==0}> <FaRegHeart  className='inline text-xl' /></button>
+        onClick ={()=>{AddtoWishlist()}} disabled={colors.item_count==0}> <FaRegHeart  className='inline text-xl' /></button>
         </div>
         
     </div>}

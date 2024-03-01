@@ -1,32 +1,51 @@
+import axios from 'axios';
 import React, { useState } from 'react'
 
 const ProductBanner = ({props,sum,setSum,orderinfo,setOrderinfo}) => { 
     const prop = props.props;
 
     const [count,setCount] = useState(prop.itemcount);
-    
     const [check,setCheck] = useState(false);
     
 const handleOrder = (state) => {
-    setCheck(!check);
+  
   const currentOrder = { order:prop, count };
-  console.log(state.target.checked)
-  if (!state.target.checked) {
+
+  if (!check) {
     const index = orderinfo.findIndex(order => order.order === prop); 
     const updatedOrder = [...orderinfo];
     updatedOrder.splice(index, 1); // Remove the item at the found index
     console.log("removed",updatedOrder)
     setOrderinfo(updatedOrder);
+    console.log((count * prop.specs.price));   
     setSum(Math.abs(sum - (count * prop.specs.price)) );
   } else {
     const updatedOrder = [...orderinfo, currentOrder];
     setOrderinfo(updatedOrder);
-    setSum(sum + (currentOrder.count * prop.specs.price));
+    console.log(sum + (count * prop.specs.price));
+    setSum(sum+(count * prop.specs.price));
     console.log(updatedOrder);
   }
-
+  setCheck(!check);
 };
 
+const handleRemove= async()=>{ 
+    try{
+        await axios.delete(
+                `http://localhost:3000/app/remove-product-cart/${prop.Product.id}`,
+                {
+                    headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    }
+                });
+                if(check){handleOrder()}
+                window.location.reload();
+    }
+    catch (e) {
+        console.log(e);
+    }
+
+}
 
   return (
     <div className='lg:flex px-10 my-10 md:space-x-5'>
@@ -49,7 +68,7 @@ const handleOrder = (state) => {
                       </div>  
                     </div>
             <button
-                
+                onClick={()=>{handleRemove()}}
                 className='bg-primary mt-4 px-12 py-2  font-semibold rounded-sm text-white duration-200 hover:bg-inherit hover:text-primary'>
                 Remove Item
             </button>

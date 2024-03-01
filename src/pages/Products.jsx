@@ -10,6 +10,7 @@ const Products = () => {
     const [response, setResponse] = useState([])
     const [colors, setColors] = useState([])
   const [category, setCategory] = useState('');
+  const [search, setSearch] = useState('');
   const [price, setPrice] = useState('0');
   const [page, setPage] = useState(1);
   const [hover, setHover] = useState(false);
@@ -61,7 +62,7 @@ useEffect(() => {
         const fetchData = async () => {
             try {
                 
-                const res = await axios.get(`http://localhost:3000/app/products/?search=&category=${category}&price=${price}&page=${page}`);
+                const res = await axios.get(`http://localhost:3000/app/products/?category=${category}&price=${price}&page=${page}`);
                 setResponse(res.data.products);
                 setColors(res.data.colors);
                 localStorage.setItem("colors", JSON.stringify(res.data.colors)); // Storing colors in localStorage
@@ -71,13 +72,40 @@ useEffect(() => {
         };
 
         fetchData();
-    }, []); 
+}, []); 
 
-// console.log(response.length)
+const handleSearch = async(e)=>{
+  e.preventDefault();
+  try {
+                
+                const res = await axios.get(`http://localhost:3000/app/products-search/?search=${search}&page=${page}`);
+                setResponse(res.data.products);
+                setColors(res.data.colors);
+                localStorage.setItem("colors", JSON.stringify(res.data.colors)); // Storing colors in localStorage
+            } catch (err) {
+                console.error(err);
+            }
+}
+
+console.log(response)
 
   return (
    <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden">
     <Navbar handleOrderPopup={handleOrderPopup} />
+    {/* Search Bar section */}
+            <form className="relative group mx-10 my-5" onSubmit={handleSearch}>
+              <input
+                type="text"
+                placeholder=" Search"
+                className="search-bar px-10 mb-8 md:mb-0"
+                value={search}
+                onChange={(e)=>setSearch(e.target.value)}
+                
+              />
+              <input type='submit' value='Search' className='block md:inline-block rounded-full ml-5 px-16 py-1 bg-secondary text-white cursor-pointer duration-200 hover:bg-slate-600'/>
+              <IoMdSearch className="text-xl text-gray-600 group-hover:text-primary dark:text-gray-400 absolute top-[15px] md:top-1/2 -translate-y-1/2 left-3 duration-200" />
+              
+            </form>
     <div className='lg:flex py-2 md:py-10'>
       <div className='bg-primary m-5 font-bold flex justify-between text-lg lg:hidden py-2 px-5 rounded-sm cursor-pointer' 
       onClick={()=>setHover(!hover)}>
@@ -99,6 +127,7 @@ useEffect(() => {
               "
               onChange={(e) => setCategory(e.target.value)}
               />
+              
               <IoMdSearch className="text-xl text-gray-600 group-hover:text-primary dark:text-gray-400 absolute top-1/2 -translate-y-1/2 left-[180px] duration-200" />
         </div>
         

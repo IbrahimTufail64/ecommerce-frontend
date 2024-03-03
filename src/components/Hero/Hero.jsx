@@ -4,6 +4,7 @@ import Image1 from "../../assets/hero/headphone.png";
 import Image2 from "../../assets/category/vr.png";
 import Image3 from "../../assets/category/macbook.png";
 import Button from "../Shared/Button";
+import { useNavigate } from "react-router-dom";
 
 const HeroData = [
   {
@@ -30,6 +31,7 @@ const HeroData = [
 ];
 
 const Hero = ({ handleOrderPopup }) => {
+  const navigate = useNavigate();
   const settings = {
     dots: false,
     arrows: false,
@@ -91,6 +93,7 @@ const Hero = ({ handleOrderPopup }) => {
                         bgColor="bg-primary"
                         textColor="text-white"
                         handler={handleOrderPopup}
+                        onClick= {()=>{navigate('/Products')}}
                       />
                     </div>
                   </div>

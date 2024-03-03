@@ -1,13 +1,15 @@
 import axios from 'axios';
 
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect, useContext } from 'react';
 import { Link,useNavigate } from 'react-router-dom';
+import { context } from '../App';
 
 
 const LoginForm = () => {
   const [Email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const {setSeller} = useContext(context);
   const handleSubmit = async(e) => {
     e.preventDefault();
     if(!(Email && password)){throw new Error('All fields are required');}
@@ -21,6 +23,7 @@ const LoginForm = () => {
         localStorage.setItem("UserName", response.data.name);
         localStorage.setItem("Email", Email);
         localStorage.setItem("Address", response.data.address);
+        setSeller(response.data.isSeller);
         localStorage.setItem("token", response.data.token);
           alert("Login successful");
           navigate("/Account");

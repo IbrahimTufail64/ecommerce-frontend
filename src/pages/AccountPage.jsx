@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Navbar from '../components/Navbar/Navbar'
 import Footer from '../components/Footer/Footer'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ProductBanner from '../components/CartProduct/ProductBanner';
 import ProductBannerWishlist from '../components/WishlistProduct/ProductBannerWishlist';
+import { context } from '../App';
 
 const AccountPage = () => {
   const [orderPopup, setOrderPopup] = React.useState(false);
@@ -13,15 +14,15 @@ const AccountPage = () => {
   const [Address, setAddress] =  useState(localStorage.getItem('Address')); 
   const [wishlist, setWishlist] =  useState([]); 
   const [sum,setSum] = useState(0);
-  const [orderinfo,setOrderinfo] = useState([]);
-  const [cart,setCart] = useState([
+  const [cart,setCart] = useState([]);
 
-  ]);
+  const {orderinfo,setOrderinfo} = useContext(context);
 
   const navigate = useNavigate();
   if(!localStorage.getItem('Email')) navigate('/');
   
 useEffect(()=>{
+  console.log(localStorage.getItem('Seller'))
   const fetchCart = async()=>{
     try{
     await axios.get(
@@ -109,7 +110,24 @@ await axios.get(
         console.error("Error sending request:", error);
       }
   }
-console.log(cart);
+const handleCheckOut = async()=>{
+  // console.log(import.meta.env.SERVER_URL)
+  try{
+    await axios.post(`${import.meta.env.VITE_SERVER_URL}/app/checkout`,{
+    items: orderinfo
+  }
+  ,{
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    }
+  }).then( e=> {
+    alert('For testing use card 4242-4242-4242')
+    window.location = e.data.url;});
+  }
+  catch(e){
+    throw new Error(e)
+  }
+}
 
   return (
      <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden">
@@ -155,13 +173,13 @@ console.log(cart);
       <div className='flex justify-between '>
         <div className='pt-8'>Sub Total: ${Math.abs(sum)}</div>
         <button
-                onClick={console.log('')}
+                onClick={()=>{handleCheckOut()}}
                 className='bg-primary mt-4 px-12 py-2  font-semibold rounded-sm text-white duration-200 hover:bg-inherit hover:text-primary'>
                 Checkout
             </button>
       </div>
       {cart.length>0 && cart.map(e=>{ 
-        return <ProductBanner props={{props:e}} sum={sum} setSum={setSum} orderinfo={orderinfo} setOrderinfo={setOrderinfo}/>
+        return <ProductBanner props={{props:e}} sum={sum} setSum={setSum} />
       })}
     </div>
 

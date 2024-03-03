@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { IoMdSearch } from "react-icons/io";
 import { FaCaretDown, FaCartShopping } from "react-icons/fa6";
 import DarkMode from "./DarkMode";
 import { useNavigate } from "react-router-dom";
+import { context } from "../../App";
 
+
+const Navbar = ({ handleOrderPopup }) => {
+  const {seller} = useContext(context)
 const MenuLinks = [
   {
     id: 1,
@@ -36,10 +40,14 @@ const DropdownLinks = [
   {
     id: 3,
     name: "Orders",
-    link: "/Account",
+    link: "/orders",
+  },
+  {
+    id: 4,
+    name: `${seller? 'Dashboard': 'Login'} `,
+    link: `/${seller? 'dashboard': 'Login'}`,
   },
 ];
-const Navbar = ({ handleOrderPopup }) => {
   const navigate = useNavigate();
   return (
     <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 relative z-40">

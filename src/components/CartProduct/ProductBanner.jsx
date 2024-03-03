@@ -1,30 +1,32 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { context } from '../../App';
 
-const ProductBanner = ({props,sum,setSum,orderinfo,setOrderinfo}) => { 
+const ProductBanner = ({props,sum,setSum}) => { 
     const prop = props.props;
-
+    const {orderinfo,setOrderinfo} = useContext(context);
     const [count,setCount] = useState(prop.itemcount);
     const [check,setCheck] = useState(false);
     
 const handleOrder = (state) => {
   
   const currentOrder = { order:prop, count };
+  console.log(state.target)
 
-  if (!check) {
+  if (!state.target.checked) {
     const index = orderinfo.findIndex(order => order.order === prop); 
     const updatedOrder = [...orderinfo];
     updatedOrder.splice(index, 1); // Remove the item at the found index
-    console.log("removed",updatedOrder)
+    console.log("removed",updatedOrder);
     setOrderinfo(updatedOrder);
     console.log((count * prop.specs.price));   
     setSum(Math.abs(sum - (count * prop.specs.price)) );
   } else {
     const updatedOrder = [...orderinfo, currentOrder];
     setOrderinfo(updatedOrder);
-    console.log(sum + (count * prop.specs.price));
+    console.log("added",updatedOrder);
     setSum(sum+(count * prop.specs.price));
-    console.log(updatedOrder);
+    console.log(orderinfo);
   }
   setCheck(!check);
 };

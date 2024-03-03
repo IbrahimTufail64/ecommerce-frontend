@@ -27,6 +27,7 @@ const Signup = () => {
         localStorage.setItem("userName", response.data.name);
         localStorage.setItem("Email", Email);
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("Seller", response.data.isSeller);
           alert("Login successful");
           navigate("/");
         })

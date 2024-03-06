@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Banner = ({ data }) => {
+  const navigate = useNavigate();
   return (
     <div className="min-h-[550px] flex justify-center items-center py-12">
       <div className="container">
@@ -47,6 +49,7 @@ const Banner = ({ data }) => {
               <button
                 style={{ color: data.bgColor }}
                 className="bg-white py-2 px-4 rounded-full"
+                handler={()=>{navigate('/Products')}}
               >
                 Shop Now
               </button>

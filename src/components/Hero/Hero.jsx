@@ -34,11 +34,11 @@ const Hero = ({ handleOrderPopup }) => {
   const navigate = useNavigate();
   const settings = {
     dots: false,
-    arrows: false,
+    arrows: true,
     infinite: true,
     speed: 800,
     slidesToScroll: 1,
-    // autoplay: true,
+    autoplay: true,
     autoplaySpeed: 4000,
     cssEase: "ease-in-out",
     pauseOnHover: false,
@@ -92,8 +92,8 @@ const Hero = ({ handleOrderPopup }) => {
                         text="Shop By Category"
                         bgColor="bg-primary"
                         textColor="text-white"
-                        handler={handleOrderPopup}
-                        onClick= {()=>{navigate('/Products')}}
+                        handler={()=>{navigate('/Products')}}
+                        
                       />
                     </div>
                   </div>

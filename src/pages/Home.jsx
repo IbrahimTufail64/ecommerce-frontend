@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import Navbar from "../components/Navbar/Navbar";
 import Hero from "../components/Hero/Hero";
 import Category from "../components/Category/Category";
@@ -16,6 +16,7 @@ import Footer from "../components/Footer/Footer.jsx";
 import Popup from "../components/Popup/Popup.jsx";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { context } from "../App.jsx";
 
 const BannerData = {
   discount: "30% OFF",
@@ -42,7 +43,8 @@ const BannerData2 = {
 };
 
 const Home = () => {
-  const [orderPopup, setOrderPopup] = React.useState(false);
+  const {orderPopup, setOrderPopup} = useContext(context)
+  
 
   const handleOrderPopup = () => {
     setOrderPopup(!orderPopup);

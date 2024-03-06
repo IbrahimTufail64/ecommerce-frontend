@@ -31,3 +31,62 @@ body{
   background-position: -100% 0;
   color: white;
 }
+
+/* Hamburger Menu */
+.McButton {
+  --bar-w: 44px;
+  --bar-h: 3px;
+  --bar-color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: calc(-var(--bar-w) / 2);
+  margin-top: calc(-var(--bar-w) / 2);
+  width: var(--bar-w);
+  height: calc((var(--bar-w) * 3) / 4);
+  cursor: pointer;
+}
+
+.McButton b {
+  position: absolute;
+  left: 0;
+  width: var(--bar-w);
+  height: var(--bar-h);
+  background-color: var(--bar-color);
+}
+
+.McButton b:nth-child(1) {
+  top: 0;
+}
+
+.McButton b:nth-child(2) {
+  top: 50%;
+}
+
+.McButton b:nth-child(3) {
+  top: 100%;
+}
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+.inputfile+label {
+  font-size: 1.25em;
+  font-weight: 700;
+  color: white;
+  background-color: black;
+  display: inline-block;
+}
+
+.inputfile:focus+label,
+.inputfile+label:hover {
+  background-color: red;
+}
+.inputfile+label {
+  cursor: pointer;
+  /* "hand" cursor */
+}

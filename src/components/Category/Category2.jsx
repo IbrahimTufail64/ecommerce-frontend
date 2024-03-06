@@ -3,8 +3,10 @@ import Image1 from "../../assets/category/gaming.png";
 import Image2 from "../../assets/category/vr.png";
 import Image3 from "../../assets/category/speaker.png";
 import Button from "../Shared/Button";
+import { useNavigate } from "react-router-dom";
 
 const Category = () => {
+  const navigate = useNavigate();
   return (
     <div className="py-8">
       <div className="container">
@@ -22,6 +24,7 @@ const Category = () => {
                   text="Browse"
                   bgColor={"bg-primary"}
                   textColor={"text-white"}
+                  handler={()=>{navigate('/Products')}}
                 />
               </div>
             </div>
@@ -44,6 +47,7 @@ const Category = () => {
                   text="Browse"
                   bgColor={"bg-white"}
                   textColor={"text-brandGreen"}
+                  handler={()=>{navigate('/Products')}}
                 />
               </div>
             </div>
@@ -62,6 +66,7 @@ const Category = () => {
                   text="Browse"
                   bgColor={"bg-white"}
                   textColor={"text-brandBlue"}
+                  handler={()=>{navigate('/Products')}}
                 />
               </div>
             </div>

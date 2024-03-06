@@ -6,6 +6,7 @@ export default {
     extend: {
       colors: {
         primary: "#f42c37",
+        tertiary: "#1E222D",
         secondary: "#f42c37",
         brandYellow: "#fdc62e",
         brandGreen: "#2dcc6f",

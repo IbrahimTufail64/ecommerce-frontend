@@ -44,15 +44,13 @@ const Footer = () => {
               Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maiores
               alias cum
             </p>
-            <p className="text-gray-500 mt-4">
-              Made with 💖 by The Coding Journey
-            </p>
+            
             <a
-              href="https://www.youtube.com/channel/UC1H-a1MKEFXRiFlGNLcy7gQ"
+              href="#"
               target="_blank"
               className="inline-block bg-primary/90 text-white py-2 px-4 mt-4 text-sm rounded-full"
             >
-              Visit our YouTube Channel
+              Visit the Creator's page
             </a>
           </div>
 
@@ -100,11 +98,11 @@ const Footer = () => {
               <div>
                 <div className="flex items-center gap-3">
                   <FaLocationArrow />
-                  <p>Noida , Uttar Pradesh</p>
+                  <p>Lamptin Garden, 7th Street</p>
                 </div>
                 <div className="flex items-center gap-3 mt-6">
                   <FaMobileAlt />
-                  <p>+91 1234567890</p>
+                  <p>+92 303-9111032</p>
                 </div>
 
                 {/* social links */}

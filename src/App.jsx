@@ -9,16 +9,19 @@ import AccountPage from "./pages/AccountPage.jsx";
 import Success from "./pages/Success.jsx";
 import Failure from "./pages/Failure.jsx";
 import Orders from "./pages/Orders.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
+import Create from "./pages/Create.jsx";
 
 export const context = createContext();
 
 const App = () => {
   const [orderinfo,setOrderinfo] = useState([]);
   const [seller,setSeller] = useState(false);
+  const [orderPopup, setOrderPopup] = useState(false);
 
   return (
     <main>
-      <context.Provider value={{orderinfo,setOrderinfo,seller,setSeller}}>
+      <context.Provider value={{orderinfo,setOrderinfo,seller,setSeller,orderPopup,setOrderPopup}}>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />}>
@@ -31,6 +34,8 @@ const App = () => {
         <Route path="/success" element={<Success />}></Route>
         <Route path="/failure" element={<Failure />}></Route>
         <Route path="/orders" element={<Orders />}></Route>
+        <Route path="/dashboard" element={<Dashboard />}></Route>
+        <Route path="/dashboard/create" element={<Create />}></Route>
       </Routes>
     </BrowserRouter>
     </context.Provider>

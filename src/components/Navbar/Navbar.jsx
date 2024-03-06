@@ -1,13 +1,37 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { IoMdSearch } from "react-icons/io";
 import { FaCaretDown, FaCartShopping } from "react-icons/fa6";
 import DarkMode from "./DarkMode";
 import { useNavigate } from "react-router-dom";
 import { context } from "../../App";
+import { Fade as Hamburger } from 'hamburger-react'
+import axios from "axios";
+
+
+export const verifyUser = async()=>{
+      try{
+        await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/user/veirfy-user`,{
+          headers:{
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        }).then( e => console.log(e.data))
+        .catch(e=> console.log(e.data))
+      }
+      catch(err){
+        localStorage.setItem('Email','');
+        localStorage.setItem('token','');
+        localStorage.setItem('Address','');
+        localStorage.getItem('UserName');
+        throw new Error(err);}
+}
 
 
 const Navbar = ({ handleOrderPopup }) => {
-  const {seller} = useContext(context)
+  const {seller,orderPopup, setOrderPopup} = useContext(context);
+  useEffect(()=>{
+    verifyUser();
+    console.log(seller)
+  })
 const MenuLinks = [
   {
     id: 1,
@@ -125,9 +149,14 @@ const DropdownLinks = [
                 {localStorage.getItem('CartSize') ? localStorage.getItem('CartSize'): 0}
               </div>
             </button>
+            
             {/* Dark Mode section */}
             <div>
               <DarkMode />
+            </div>
+            {/* HamburgerMenu */}
+            <div className="md:hidden">
+              <Hamburger size='20' toggled={orderPopup} toggle={setOrderPopup} color="#f42c37" />
             </div>
           </div>
         </div>

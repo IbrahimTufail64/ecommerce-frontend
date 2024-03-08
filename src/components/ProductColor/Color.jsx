@@ -19,12 +19,12 @@ const Color = ({color,count,setCount,setColor,index,imageurl,setImageUrl}) => {
             Authorization: `Bearer ${localStorage.getItem('token')}`
           }
         }).then( e => {
-            console.log(e.data)
             const images = [...imageurl];
-            images[index] = e.data;
+            images[index] = e.data.filename;
             setImageUrl(images)
+            console.log(e.data.filename);
         })
-        .catch(e=> console.log(e.data))
+        .catch(e=> console.log(e))
         }
         catch(e){
             throw new Error(e);
@@ -58,20 +58,20 @@ const Color = ({color,count,setCount,setColor,index,imageurl,setImageUrl}) => {
                 
                 <input
                     type="file"
-                    name="file"
-                    id="file"
+                    name={index}
+                    id={index}
                     class="opacity-0 absolute w-0 h-0"
                     onChange={(e) => uploadImage(e)}
                     accept="image/png, image/jpg, image/jpeg"
                     />
                     <label
-                    for="file"
+                    for={index}
                     class="text-white bg-primary inline-block cursor-pointer font-bold text-lg px-4 py-2 hover:bg-red-600"
                     >
                     Choose thumbnail
                     </label>
                     <div className='flex justify-between'>
-                        <div className='mb-10'>{image.name}</div>
+                        {image && <div className='mb-10'>{image.name}</div>}
                         <div className='mb-10 text-slate-500'>{indexation}</div>
                     </div>
                 

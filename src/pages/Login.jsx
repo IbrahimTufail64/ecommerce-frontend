@@ -14,7 +14,7 @@ const LoginForm = () => {
     e.preventDefault();
     if(!(Email && password)){throw new Error('All fields are required');}
     try {
-        await axios.post(" http://localhost:3000/api/user/login", {
+        await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/user/login`, {
           email:Email,
           password
         }).then(function (response) {

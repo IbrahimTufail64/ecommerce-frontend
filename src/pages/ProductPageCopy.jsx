@@ -5,12 +5,16 @@ import Navbar from '../components/Navbar/Navbar';
 import { IoClose } from "react-icons/io5";
 import { FaShoppingCart  } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
+import Ratings from '../components/Rating/ratings';
 
 
 const ProductPageCopy = () => {
         const { id } = useParams();
     const [response, setResponse] = useState([])
-    const [colorsArr, setColors] = useState([{imageuri: "sample", color: "black data",item_count: 0}])
+    const [colorsArr, setColors] = useState([{imageuri: "sample", color: "black data",item_count: 0}]);
+    const [ratings, setRatings] = useState([]);
+    const [user, setUser] = useState([]);
+    const [stars, setStars] = useState();
     const [specsArr, setSpecs] = useState([{specs: ""}])
     const [count, setCount] = useState(1);
     const [orderPopup, setOrderPopup] = React.useState(false);
@@ -45,11 +49,24 @@ const changespec = (ID)=>{
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(`http://localhost:3000/app/products/${id}`);
+                const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/app/products/${id}`);
                 setResponse(res.data.products || {});
                 setColors(res.data.colors || []);
                 console.log(res.data);
                 setSpecs(res.data.specs || {});
+                // fetching ratings
+                await axios.get(`${import.meta.env.VITE_SERVER_URL}/app/fetch-ratings/${id}`)
+                .then( res => {
+                    console.log(res.data);
+                    setRatings(res.data.ratings);
+                    setUser(res.data.customers);
+                    let sum = 0;
+                    res.data.ratings.map((e)=>{
+                        sum += e.review
+                    });
+                    setStars(parseFloat(sum/res.data.ratings.length));
+                    
+                })
             } catch (error) {
                 console.error(error);
             }
@@ -72,7 +89,7 @@ const changespec = (ID)=>{
 
 const AddtoWishlist = async()=>{
 try{
-    const res = await axios.get(`http://localhost:3000/app/add-to-wishlist/${id}`,{
+    const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/app/add-to-wishlist/${id}`,{
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
             },
@@ -86,7 +103,7 @@ catch(err){throw new Error(err);}
 const AddtoCart= async()=>{
 
 try{
-    const res = await axios.get(`http://localhost:3000/app/add-to-cart/${id}?count=${count}&color=${colors.color}&specs=${specs.specs}`,{
+    const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/app/add-to-cart/${id}?count=${count}&color=${colors.color}&specs=${specs.specs}`,{
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
             },
@@ -101,12 +118,12 @@ catch(err){throw new Error(err);}
         
     specs = specsArr[0];
   return (
-    <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden relative md:h-[1000px]">
+    <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden relative md:h-[1000px] lg:h-auto lg:pb-10">
     <Navbar handleOrderPopup={handleOrderPopup} />
     {response && 
     <div className='md:flex m-5'>
         <div className='md:w-1/2 mt-10'>
-            <img src={colors.imageuri} className='w-full  object-cover' alt="Product Image" />
+            <img src={`${import.meta.env.VITE_SERVER_URL}/images/${colors.imageuri}`} className='w-full  object-cover' alt="Product Image" />
         </div>
 
 
@@ -115,16 +132,15 @@ catch(err){throw new Error(err);}
             <div className='font-Medium  text-3xl dark:text-white'>{response.name}</div>
             <div className='text-lg font-light dark:text-white'>Available Specs:</div>
             {specsArr.map( e=>
-                    <div className={` py-[2px]  cursor-pointer ${specs.specs === e.specs ? ' text-primary': 'border-stone-500'}`}>
+                    <div className={` py-[2px]  cursor-pointer ${specs.specs === e.specs ? ' text-brandYellow border-brandYellow': 'border-stone-500'}`}>
                         <button  onClick={changespec} value={e.specs}>{e.specs}</button>
                     </div>
                 )}
-            <div className='text-lg font-light dark:text-white'>description:</div>
-            <div>{response.desc}</div>
+            
             <div className='text-lg font-light dark:text-white'>Available Colors:</div>
             <div className='space-x-2'>{colorsArr.map(e=>{
                 return <button onClick={changeColor} value={e.color}
-                className={`border-[1px] px-4 py-[2px] rounded-md  cursor-pointer ${colors.color === e.color ? 'border-primary text-primary': 'border-stone-500'}`}>
+                className={`border-[1px] px-4 py-[2px] rounded-md  cursor-pointer ${colors.color === e.color ? 'border-brandYellow text-brandYellow': 'border-stone-500'}`}>
                     {e.color}</button>
             })}</div>
             <div className='text-lg font-light dark:text-white'>Items Left:</div>
@@ -144,6 +160,33 @@ catch(err){throw new Error(err);}
         </div>
         
     </div>}
+    <div className='p-5 rounded-lg m-5 dark:bg-gray-500 bg-gray-200'>
+        <div className='text-2xl font-light dark:text-white'>Ratings:</div>
+        <span className='text-4xl font-bold text-black'>{stars}</span><span className='mt-4 text-gray-400 ml-2'>out of 5</span>
+        <div className='flex'>
+            <Ratings stars={stars}/><div className='text-gray-100 pt-1 px-5'>{ratings?.length}<span className='pl-2'>Ratings</span></div> 
+        </div>
+        
+        <div className='dark:text-brandYellow mt-10'>{ratings.map(
+            (e, i) => {
+                return (
+                    <div key={i} className='flex items-center space-x-2 pb-4'>
+                        <img src={ 'https://i.pinimg.com/564x/eb/87/8e/eb878e8e1b26850ab4093d4d6818fe8b.jpg'} className='w-10 h-10 mb-16 rounded-full' alt="User Image" />
+                        <div className='flex flex-col'>
+                            
+                            <div className='text-xl font-semibold dark:text-brandYellow '>@{user[i].name}</div>
+                            <Ratings stars={ratings[i].review}/>
+                            <div className=' dark:text-white m-2'>{ratings[i].comment}</div>
+                            {ratings[i].reply && <><div>Reply:</div><div className=' dark:text-gray-300 ml-5 text-sm'>{ratings[i].reply}</div></>}
+                        </div>
+                    </div>
+                )
+            }
+        )}</div>
+        <div className='text-2xl font-light dark:text-white'>description:</div>
+        <div className='dark:text-brandYellow'>{response.desc}</div>
+
+    </div>
 </div>
   )
 }

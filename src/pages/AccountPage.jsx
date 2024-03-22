@@ -26,7 +26,7 @@ useEffect(()=>{
   const fetchCart = async()=>{
     try{
     await axios.get(
-  "http://localhost:3000/app/cart",
+  `${import.meta.env.VITE_SERVER_URL}/app/cart`,
   {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -36,7 +36,7 @@ useEffect(()=>{
 
 
     await axios.get(
-  "http://localhost:3000/app/wishlist",
+  `${import.meta.env.VITE_SERVER_URL}/app/wishlist`,
   {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -60,7 +60,7 @@ console.log(wishlist);
      e.preventDefault();
     try {
 await axios.post(
-  "http://localhost:3000/api/user/update-account",
+  `${import.meta.env.VITE_SERVER_URL}/api/user/update-account`,
   {
     email: Email,
     name: UserName,
@@ -90,7 +90,7 @@ const handleLogout = async(e)=>{
         console.log(localStorage.getItem('token'))
     try {
 await axios.get(
-  "http://localhost:3000/api/user/logout",
+  `${import.meta.env.VITE_SERVER_URL}/api/user/logout`,
   {
     headers: {
       Authorization: `Bearer ${localStorage.getItem('token')}`,

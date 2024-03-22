@@ -34,7 +34,7 @@ const handleOrder = (state) => {
 const handleRemove= async()=>{ 
     try{
         await axios.delete(
-                `http://localhost:3000/app/remove-product-cart/${prop.Product.id}`,
+                `${import.meta.env.VITE_SERVER_URL}/app/remove-product-cart/${prop.Product.id}`,
                 {
                     headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -53,7 +53,7 @@ const handleRemove= async()=>{
     <div className='lg:flex px-10 my-10 md:space-x-5'>
                   
                   <div className=''>
-                    <img src={prop.color ? prop.color.imageuri : ''} className='w-full md:w-40 md:h-40 object-cover mb-10 md:mb-0'/>
+                    <img src={`${import.meta.env.VITE_SERVER_URL}/images/${prop.color ? prop.color.imageuri : ''}`} className='w-full md:w-40 md:h-40 object-cover mb-10 md:mb-0'/>
                   </div>
                   <div>
                     <div className='text-2xl text-primary'>{prop.Product.name}</div>

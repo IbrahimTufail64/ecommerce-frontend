@@ -4,6 +4,7 @@ import { IoAddOutline } from "react-icons/io5";
 import Specs from '../components/ProductSpecs/Specs';
 import axios from 'axios';
 
+
 const Create = () => {
     const [prodName, setProdName] = useState('');
     const [category, setCategory] = useState('');
@@ -26,7 +27,7 @@ const Create = () => {
         setPrice([...price,1]);
         console.log(specs,price);
     }
-
+    
     const createProduct = async(e)=>{
         e.preventDefault();
         console.log('imageuri',imageurl);
@@ -59,7 +60,8 @@ const Create = () => {
     <div className='md:px-[150px] py-16 relative '>
         <div className='text-tertiary font-semibold text-4xl '>
             Create Product
-        </div>
+        </div> 
+
         <form className='text-white bg-tertiary p-10 lg:w-[800px] mt-5 rounded-3xl'> 
             <label className="">Product Name</label>
             <input type="text" required className=" appearance-none mb-5 relative block md:w-full px-3 py-2 border-b-2 text-white border-gray-400 bg-inherit focus:outline-none max-w-[250px] focus:z-10 sm:text-sm"

@@ -18,7 +18,7 @@ const ProductBannerWishlist = ({prop}) => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(`http://localhost:3000/app/products/${prop.product_id}`);
+                const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/app/products/${prop.product_id}`);
                 setProduct(res.data);
                 console.log("product ",product)
             } catch (error) {
@@ -31,7 +31,7 @@ const ProductBannerWishlist = ({prop}) => {
     const handleRemove= async()=>{ 
     try{
         await axios.delete(
-                `http://localhost:3000/app/remove-product-wishlist/${prop.product_id}`,
+                `${import.meta.env.VITE_SERVER_URL}/app/remove-product-wishlist/${prop.product_id}`,
                 {
                     headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -48,7 +48,7 @@ const ProductBannerWishlist = ({prop}) => {
         <div className='lg:flex px-10 my-10 md:space-x-5'>
                   
                   <div className=''>
-                    <img src={product.colors[0] ? product.colors[0].imageuri : ''} className='w-full md:w-40 md:h-40 object-cover mb-10 md:mb-0'/>
+                    <img src={`${import.meta.env.VITE_SERVER_URL}/images/${product.colors[0] ? product.colors[0].imageuri : ''}`} className='w-full md:w-40 md:h-40 object-cover mb-10 md:mb-0'/>
                   </div>
                   <div>
                     <div className='text-2xl text-primary'>{product.products.name}</div>

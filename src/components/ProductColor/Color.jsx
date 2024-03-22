@@ -2,34 +2,38 @@ import React, { useState } from 'react'
 import '../../index.css';
 import axios from 'axios';
 
+
 const Color = ({color,count,setCount,setColor,index,imageurl,setImageUrl}) => {
     const [image,setImage] = useState('');
 
     const indexation = `${index+1} of ${color.length}`
 
-    const uploadImage = async(e)=>{
-        e.preventDefault();
-        setImage(e.target.files[0])
-        try{
-            console.log(image);
-            const formData = new FormData();
-            formData.append('image',image);
-            await axios.post(`${import.meta.env.VITE_SERVER_URL}/app/upload-image`,formData,{
-          headers:{
-            Authorization: `Bearer ${localStorage.getItem('token')}`
-          }
-        }).then( e => {
-            const images = [...imageurl];
-            images[index] = e.data.filename;
-            setImageUrl(images)
-            console.log(e.data.filename);
-        })
-        .catch(e=> console.log(e))
-        }
-        catch(e){
-            throw new Error(e);
-        }
-    }
+const uploadImage = async (e) => {
+  e.preventDefault();
+  try {
+    const selectedImage = e.target.files[0]; // Get the selected file
+    setImage(selectedImage); // Update the state with the selected file
+    console.log(selectedImage); // Log the selected file
+
+    const formData = new FormData();
+    formData.append('image', selectedImage);
+
+    await axios.post(`${import.meta.env.VITE_SERVER_URL}/upload-image`, formData, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    }).then((response) => {
+      const images = [...imageurl];
+      images[index] = response.data;
+      setImageUrl(images);
+      console.log(response.data);
+    }).catch((error) => {
+      console.log(error);
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
     const changeColor = (e)=>{
         const newColor = [...color];
@@ -62,7 +66,7 @@ const Color = ({color,count,setCount,setColor,index,imageurl,setImageUrl}) => {
                     id={index}
                     class="opacity-0 absolute w-0 h-0"
                     onChange={(e) => uploadImage(e)}
-                    accept="image/png, image/jpg, image/jpeg"
+                    // accept="image/png, image/jpg, image/jpeg"
                     />
                     <label
                     for={index}

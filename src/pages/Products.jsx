@@ -25,7 +25,7 @@ const handleSubmit = async(e) => {
   e.preventDefault();
             try {
               
-                const res = await axios.get(`http://localhost:3000/app/products/?search=M2&category=${category}&price=${price}&page=${page}`);
+                const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/app/products/?search=M2&category=${category}&price=${price}&page=${page}`);
                 setResponse(res.data.products);
                 setColors(res.data.colors);
                 localStorage.setItem("colors", JSON.stringify(res.data.colors)); // Storing colors in localStorage
@@ -37,7 +37,7 @@ const handleNext = async(e) => {
   e.preventDefault();
             try {
                 setPage(page+1);
-                const res = await axios.get(`http://localhost:3000/app/products/?search=M2&category=${category}&price=${price}&page=${page}`);
+                const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/app/products/?search=M2&category=${category}&price=${price}&page=${page}`);
                 setResponse(res.data.products);
                 setColors(res.data.colors);
                 localStorage.setItem("colors", JSON.stringify(res.data.colors)); // Storing colors in localStorage
@@ -49,7 +49,7 @@ const handlePrevious = async(e) => {
   e.preventDefault();
             try {
                 setPage(page-1);
-                const res = await axios.get(`http://localhost:3000/app/products/?search=M2&category=${category}&price=${price}&page=${page}`);
+                const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/app/products/?search=M2&category=${category}&price=${price}&page=${page}`);
                 setResponse(res.data.products);
                 setColors(res.data.colors);
                 localStorage.setItem("colors", JSON.stringify(res.data.colors)); // Storing colors in localStorage
@@ -62,7 +62,7 @@ useEffect(() => {
         const fetchData = async () => {
             try {
                 
-                const res = await axios.get(`http://localhost:3000/app/products/?category=${category}&price=${price}&page=${page}`);
+                const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/app/products/?category=${category}&price=${price}&page=${page}`);
                 setResponse(res.data.products);
                 setColors(res.data.colors);
                 localStorage.setItem("colors", JSON.stringify(res.data.colors)); // Storing colors in localStorage
@@ -78,7 +78,7 @@ const handleSearch = async(e)=>{
   e.preventDefault();
   try {
                 
-                const res = await axios.get(`http://localhost:3000/app/products-search/?search=${search}&page=${page}`);
+                const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/app/products-search/?search=${search}&page=${page}`);
                 setResponse(res.data.products);
                 setColors(res.data.colors);
                 localStorage.setItem("colors", JSON.stringify(res.data.colors)); // Storing colors in localStorage
@@ -155,7 +155,7 @@ console.log(response)
   <div>
     <img
       className='w-full h-[200px] rounded-t-md object-cover'
-      src={colors.find(color => color !== null && color.product_id === product.id).imageuri}
+      src={`${import.meta.env.VITE_SERVER_URL}/images/${colors.find(color => color !== null && color.product_id === product.id).imageuri}`}
     />
   </div>
 )}

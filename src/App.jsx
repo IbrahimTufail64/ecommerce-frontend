@@ -12,6 +12,10 @@ import Orders from "./pages/Orders.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Create from "./pages/Create.jsx";
 import Review from "./pages/Review.jsx";
+import Inbox from "./pages/Inbox.jsx";
+import DashboardProducts from "./pages/DashboardProducts.jsx";
+import Modal from "./components/ConfirmModal/Modal.jsx";
+import EditProduct from "./pages/EditProduct.jsx";
 
 export const context = createContext();
 
@@ -22,7 +26,7 @@ const App = () => {
   const [rating, setRatings] = useState({});
 
   return (
-    <main>
+    <main className="relative">
       <context.Provider value={{orderinfo,setOrderinfo,seller,setSeller,orderPopup,setOrderPopup,rating,setRatings}}>
     <BrowserRouter>
       <Routes>
@@ -39,6 +43,9 @@ const App = () => {
         <Route path="/review-product" element={<Review />}></Route>
         <Route path="/dashboard" element={<Dashboard />}></Route>
         <Route path="/dashboard/create" element={<Create />}></Route>
+        <Route path="/dashboard/inbox" element={<Inbox />}></Route>
+        <Route path="/dashboard/products" element={<DashboardProducts />}></Route>
+        <Route path="/dashboard/products/edit/:id" element={<EditProduct />}></Route>
       </Routes>
     </BrowserRouter>
     </context.Provider>

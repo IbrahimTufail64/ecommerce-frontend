@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { context } from '../../App';
 
 const ProductBanner = ({props,sum,setSum}) => { 
@@ -7,11 +7,14 @@ const ProductBanner = ({props,sum,setSum}) => {
     const {orderinfo,setOrderinfo} = useContext(context);
     const [count,setCount] = useState(prop.itemcount);
     const [check,setCheck] = useState(false);
+
+    
     
 const handleOrder = (state) => {
   
   const currentOrder = { order:prop, count };
   console.log(state.target)
+
 
   if (!state.target.checked) {
     const index = orderinfo.findIndex(order => order.order === prop); 

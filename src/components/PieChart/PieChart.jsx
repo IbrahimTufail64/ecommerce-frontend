@@ -4,41 +4,10 @@ import { ResponsivePie } from '@nivo/pie'
 
 // make sure parent container have a defined height when using
 // responsive component, otherwise height will be 0 and
-const data = [
-  {
-    "id": "make",
-    "label": "make",
-    "value": 243,
-    "color": "hsl(9, 70%, 50%)"
-  },
-  {
-    "id": "go",
-    "label": "go",
-    "value": 564,
-    "color": "hsl(300, 70%, 50%)"
-  },
-  {
-    "id": "java",
-    "label": "java",
-    "value": 40,
-    "color": "hsl(40, 70%, 50%)"
-  },
-  {
-    "id": "javascript",
-    "label": "javascript",
-    "value": 99,
-    "color": "hsl(300, 70%, 50%)"
-  },
-  {
-    "id": "python",
-    "label": "python",
-    "value": 11,
-    "color": "hsl(8, 70%, 50%)"
-  }
-]
+
 // website examples showcase many properties,
 // you'll often use just a few of them.
-export const MyResponsivePie = () => (
+export const MyResponsivePie = ({data}) => (
     <ResponsivePie
         theme={
             {

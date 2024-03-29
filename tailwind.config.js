@@ -18,7 +18,7 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         dashboardPrimary: '#1C1917',
-        dashboardSecondary: '#E11D48',
+        dashboardSecondary: '#f54242',
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",

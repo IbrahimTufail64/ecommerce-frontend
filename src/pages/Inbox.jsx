@@ -22,8 +22,14 @@ const Inbox = () => {
             })
             .then( res => {
                 console.log(res.data)
-                console.log('page: ',page)
-                setOrders(()=> [... orders,...res.data.orders])
+                if(page == 1){
+                setOrders(()=> [...res.data.orders])
+                }
+                else{
+                    const orderSet = new Set([... orders,...res.data.orders]);
+                setOrders(()=> [...orderSet])
+                }
+                
             })
             .catch(err => console.log(err))
             setLoadingState(false);
@@ -38,9 +44,8 @@ const Inbox = () => {
         fetchInbox();
     },[page])
 
-  useEffect(() => {
-    // Create a new array by sorting the orders
-    const sortedOrders = [...orders].sort((a, b) => {
+
+ const sortedOrders = [...orders].sort((a, b) => {
         // If status is 'pending', prioritize it over others
         if (a.status === 'pending' && b.status !== 'pending') {
             return -1; // a comes before b
@@ -49,10 +54,16 @@ const Inbox = () => {
         } else {
             return 0; // Maintain the original order
         }
+    
     });
 
+
+  useEffect(() => {
+    // Create a new array by sorting the orders
+   
+
     // Update the state with the sorted array
-    setOrders(sortedOrders);
+    setOrders([]);
 }, [orderStatus]);
 
     const handleScroll = ()=>{

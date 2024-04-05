@@ -38,10 +38,21 @@ const [orderPopup, setOrderPopup] = React.useState(false);
             .then( res => {
                 console.log(res.data)
                 // console.log(products)
-                if( !(products.length>6 && page == 1) ){
-                    console.log(page, products)
-                    setProducts(products => [...products,...res.data.products]);
-                setProductColors(colors => [...colors,...res.data.colors]);
+                if(  page == 1 ){
+                    setProducts(products => {
+                      return    [...res.data.products]
+                    });
+                setProductColors(colors => {
+                    return [...res.data.colors]});
+                }
+                else{
+                    setProducts(products => {
+                        const productSet = new Set( [...products,...res.data.products])
+                        return [...productSet]
+                    });
+                setProductColors(colors => {
+                    const ColorSet = new Set( [...colors,...res.data.colors])
+                    return [...ColorSet]});
                 }
             })
         }

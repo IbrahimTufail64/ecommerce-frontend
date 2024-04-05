@@ -52,6 +52,36 @@ const fetchProducts = async()=>{
     }
 }
 
+
+ const createProduct = async(e)=>{
+        e.preventDefault();
+        console.log('imageuri',imageurl);
+        console.log(color.join('|'));
+        try{
+            if(price[0]==1 || count[0] == 1 || color[0]=='' || imageurl[0]=='' || specs[0]==''){ throw new Error('fields not fully filled out')}
+            await axios.post(`${import.meta.env.VITE_SERVER_URL}/admin/edit-product/${id}`,{
+                name: prodName,
+                price: price.join('|'),
+                count: count.join('|'),
+                desc: desc,
+                category: category,
+                color: color.join('|'),
+                URI: imageurl.join('|'),
+                specs: specs.join('|')
+            },{
+          headers:{
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        }).then( e => {
+            console.log(e.data)
+        })
+        .catch(e=> console.log(e.data))
+        }
+        catch(e){
+            throw new Error(e);
+        }
+    }
+
 useEffect(()=>{
     fetchProducts();
 },[])
@@ -64,7 +94,8 @@ useEffect(()=>{
         setImageUrl([...imageurl,'']);
         console.log(color,count);
     }
-    const deleteColor = () =>{
+    const deleteColor = (e) =>{
+        e.preventDefault();
         let temp = color;
         temp.pop();
         setColor([...temp]);
@@ -127,7 +158,7 @@ useEffect(()=>{
                 <div className='font-semibold text-2xl mb-5 '>Colors</div>
                 <div className='flex space-x-3'>
                     <button className='cursor-pointer disabled:opacity-40' disabled={color.length <=1}
-                onClick={()=>{deleteColor()}}
+                onClick={(e)=>{deleteColor(e)}}
                 ><FaSquareMinus className='text-white size-12'/></button>
                 <div className='bg-[#FFFFFF] h-[40px] rounded-md pb-6 mt-2 cursor-pointer '
                 onClick={()=>{createColor()}}
@@ -157,7 +188,7 @@ useEffect(()=>{
             </div>
             </div>
             <button type='submit' className=' my-5 bg-dashboardSecondary py-2 px-7 text-3xl lg:ml-[230px] block mt-24' onClick={(e)=>{createProduct(e)}}>
-                Create Product
+                Edit Product
             </button>
         </form> 
 </div>

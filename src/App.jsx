@@ -16,6 +16,7 @@ import Inbox from "./pages/Inbox.jsx";
 import DashboardProducts from "./pages/DashboardProducts.jsx";
 import Modal from "./components/ConfirmModal/Modal.jsx";
 import EditProduct from "./pages/EditProduct.jsx";
+import DashboardCustomers from "./pages/DashboardCustomers.jsx";
 
 export const context = createContext();
 
@@ -45,6 +46,7 @@ const App = () => {
         <Route path="/dashboard/create" element={<Create />}></Route>
         <Route path="/dashboard/inbox" element={<Inbox />}></Route>
         <Route path="/dashboard/products" element={<DashboardProducts />}></Route>
+        <Route path="/dashboard/customers" element={<DashboardCustomers />}></Route>
         <Route path="/dashboard/products/edit/:id" element={<EditProduct />}></Route>
       </Routes>
     </BrowserRouter>

@@ -105,7 +105,7 @@ const [orderPopup, setOrderPopup] = React.useState(false);
     },[page,products])
 
   return (
-    <div className="bg-white dark:bg-black dark:text-white duration-200 overflow-hidden">
+    <div className="bg-black text-white duration-200 overflow-hidden">
       <div className='hidden'><Navbar handleOrderPopup={handleOrderPopup} /></div>     
         {/* Sidebar  */}
 

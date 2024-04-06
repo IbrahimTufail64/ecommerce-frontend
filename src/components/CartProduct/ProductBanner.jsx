@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import { context } from '../../App';
+import Success_popup from '../PopUp_Messages/Success_popup';
+import Fail_popup from '../PopUp_Messages/Fail_popup';
 
 const ProductBanner = ({props,sum,setSum}) => { 
     const prop = props.props;
@@ -8,6 +10,10 @@ const ProductBanner = ({props,sum,setSum}) => {
     const [count,setCount] = useState(prop.itemcount);
     const [check,setCheck] = useState(false);
 
+    // pop up setup
+  const [successToggle, setSuccessToggle] = useState(false);
+    const [failedToggle, setFailedToggle] = useState(false);
+    const [popUpContent, setPopUpContent] = useState('');
     
     
 const handleOrder = (state) => {
@@ -44,9 +50,15 @@ const handleRemove= async()=>{
                     }
                 });
                 if(check){handleOrder()}
-                window.location.reload();
+                setPopUpContent('Product Removed Successfully');
+        setSuccessToggle(true);
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
     }
     catch (e) {
+      setPopUpContent('Server Error! unable to remove product');
+      setFailedToggle(true);
         console.log(e);
     }
 
@@ -67,10 +79,10 @@ const handleRemove= async()=>{
                           <span>{count}</span>
                           <span onClick={()=> {if(count< prop.color.item_count &&!check){setCount(count+1)}}}>+</span>
                       </div>
-                      <div className='flex space-x-3'>
-                        <span className='pt-3'>Selected: </span>
-                        <input type="checkbox"  onClick={(state)=>{handleOrder(state)}} ></input>
-                      </div>  
+                      <div class="flex items-center mb-4 space-x-4">
+                          <label for="default-checkbox" class="ms-2 text-xl font-medium text-gray-900 dark:text-gray-300">Selected:</label>
+                          <input id="default-checkbox" onClick={(state)=>{handleOrder(state)}} type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                      </div>
                     </div>
             <button
                 onClick={()=>{handleRemove()}}
@@ -78,6 +90,8 @@ const handleRemove= async()=>{
                 Remove Item
             </button>
                   </div>
+                  <Fail_popup openWindow={failedToggle} setOpenWindow={setFailedToggle} content={popUpContent}/>
+    <Success_popup openWindow={successToggle} setOpenWindow={setSuccessToggle} content={popUpContent}/>
                 </div>
   )
 }

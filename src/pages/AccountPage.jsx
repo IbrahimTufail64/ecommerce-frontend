@@ -6,6 +6,9 @@ import axios from 'axios';
 import ProductBanner from '../components/CartProduct/ProductBanner';
 import ProductBannerWishlist from '../components/WishlistProduct/ProductBannerWishlist';
 import { context } from '../App';
+import Success_popup from '../components/PopUp_Messages/Success_popup';
+import Fail_popup from '../components/PopUp_Messages/Fail_popup';
+import notFound from '../assets/notFound.png'
 
 const AccountPage = () => {
   const [orderPopup, setOrderPopup] = React.useState(false);
@@ -15,8 +18,13 @@ const AccountPage = () => {
   const [wishlist, setWishlist] =  useState([]); 
   const [sum,setSum] = useState(0);
   const [cart,setCart] = useState([]);
-
   const {orderinfo,setOrderinfo} = useContext(context);
+// pop up setup
+  const [successToggle, setSuccessToggle] = useState(false);
+    const [failedToggle, setFailedToggle] = useState(false);
+    const [popUpContent, setPopUpContent] = useState('');
+
+  
 
   const navigate = useNavigate();
   if(!localStorage.getItem('Email')) navigate('/');
@@ -53,9 +61,13 @@ console.log(wishlist);
   }
   fetchCart();
 },[])
+
+
   const handleOrderPopup = () => {
     setOrderPopup(!orderPopup);
   };
+
+
   const handleSubmit = async(e)=>{
      e.preventDefault();
     try {
@@ -73,11 +85,17 @@ await axios.post(
   }
 ).then(function (response) {
         console.log(response.data);
-          alert("Profile Edited!");
+        localStorage.setItem("UserName", response.data.name);
+        localStorage.setItem("Email", response.data.email);
+        localStorage.setItem("Address", response.data.address);
+        setPopUpContent('Profile Updated!');
+        setSuccessToggle(true);
+        console.log(localStorage.getItem("UserName"));
         })
         .catch(function (error) {
           console.log(error);
-          alert("Please Login again to continue");
+          setPopUpContent('Can not update Profile, you might be logged out!');
+          setFailedToggle(true);
           navigate("/Login");
         });       
       } catch (error) {
@@ -104,9 +122,14 @@ await axios.get(
         alert("Successfully LogedOut!");
         navigate('/'); 
         })
-.catch(e => console.log(e));
+.catch(e => {
+  setPopUpContent('Server Error! unable to log out!');
+        setFailedToggle(true);
+});
    
       } catch (error) {
+        setPopUpContent('Server Error! unable to log out!');
+        setFailedToggle(true);
         console.error("Error sending request:", error);
       }
   }
@@ -121,7 +144,7 @@ const handleCheckOut = async()=>{
       Authorization: `Bearer ${localStorage.getItem('token')}`,
     }
   }).then( e=> {
-    alert('For testing use card 4242-4242-4242')
+    alert('For testing use card 4242-4242-4242-4242')
     window.location = e.data.url;});
   }
   catch(e){
@@ -171,27 +194,37 @@ const handleCheckOut = async()=>{
     <div className='px-10'>
       <div className='text-4xl font-semibold text-primary mb-5 mt-16'>Cart</div>
       <div className='flex justify-between '>
-        <div className='pt-8'>Sub Total: ${Math.abs(sum)}</div>
+        <div className='pt-8 text-2xl font-light'>Sub Total: ${Math.abs(sum)}</div>
         <button
                 onClick={()=>{handleCheckOut()}}
-                className='bg-primary mt-4 px-12 py-2  font-semibold rounded-sm text-white duration-200 hover:bg-inherit hover:text-primary'>
+                className='bg-primary mt-4 px-12 py-2 text-xl font-semibold rounded-sm text-white duration-200 hover:bg-inherit hover:text-primary'>
                 Checkout
             </button>
       </div>
-      {cart.length>0 && cart.map(e=>{ 
+      {cart.length>0 ? cart.map(e=>{ 
         return <ProductBanner props={{props:e}} sum={sum} setSum={setSum} />
-      })}
+      }): <div className='flex justify-center '>
+            <div className=''><img src={notFound} />
+                <div className='my-10 text-3xl font-light text-center'>Try Adding something to your cart!</div>
+            </div>
+        </div>}
     </div>
 
 
     <div className='px-10'>
       <div className='text-4xl font-semibold text-primary mb-5 mt-16'>Wishlist</div>
-      {wishlist.length > 0 && wishlist.map(e=>{ 
+      {wishlist.length > 0 ? wishlist.map(e=>{ 
         return <ProductBannerWishlist prop={e}/>
-      })}
+      }): <div className='flex justify-center '>
+            <div className=''><img src={notFound} />
+                <div className='my-10 text-3xl font-light text-center'>Try Adding something to your wishlist!</div>
+            </div>
+        </div>}
     </div>
 
     <Footer/>
+    <Fail_popup openWindow={failedToggle} setOpenWindow={setFailedToggle} content={popUpContent}/>
+    <Success_popup openWindow={successToggle} setOpenWindow={setSuccessToggle} content={popUpContent}/>
     </div>
   )
 }

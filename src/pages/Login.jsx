@@ -45,9 +45,9 @@ const LoginForm = () => {
 
   return (
 
-    <main className="md:flex h-[650px]" >
+    <main className="md:flex  h-[900px] bg-white" >
         
-     <div className='p-10  pt-[50px] pl-20 backdrop-blur-md  md:w-2/5 bg-[#111827] h-full'>
+     <div className='p-10  pl-20 backdrop-blur-md  md:w-2/5 bg-[#111827] h-full pt-[150px]'>
       {/* <div className='text-white'>Logo</div> Logo */}
         <form onSubmit={handleSubmit}>
         <p className="mt-6  text-3xl md:text-5xl pb-10 font-light text-primary h-full">
@@ -69,7 +69,7 @@ const LoginForm = () => {
         <div className='text-white pt-5'>Don't have an account?<Link className='pl-2 text-primary' to='/SignUp'>Sign up</Link></div>
         </form>
     </div>
-    <div className='w-3/5 hidden md:block'>
+    <div className='w-3/5 hidden md:block mt-[150px]'>
         <img src='https://img.freepik.com/free-vector/online-shopping-concept-illustration_114360-1084.jpg?w=740&t=st=1708345830~exp=1708346430~hmac=e4f40ce6a4163d2e68877990674f375ee7f2cb1b55f49fab964bd2f4f99191e8'/>
     </div>
             </main>

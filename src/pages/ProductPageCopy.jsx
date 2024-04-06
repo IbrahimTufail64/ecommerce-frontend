@@ -6,6 +6,8 @@ import { IoClose } from "react-icons/io5";
 import { FaShoppingCart  } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import Ratings from '../components/Rating/ratings';
+import Success_popup from '../components/PopUp_Messages/Success_popup';
+import Fail_popup from '../components/PopUp_Messages/Fail_popup';
 
 
 const ProductPageCopy = () => {
@@ -13,11 +15,16 @@ const ProductPageCopy = () => {
     const [response, setResponse] = useState([])
     const [colorsArr, setColors] = useState([{imageuri: "sample", color: "black data",item_count: 0}]);
     const [ratings, setRatings] = useState([]);
+    const [category, setCategory] = useState('');
     const [user, setUser] = useState([]);
     const [stars, setStars] = useState();
     const [specsArr, setSpecs] = useState([{specs: ""}])
     const [count, setCount] = useState(1);
     const [orderPopup, setOrderPopup] = React.useState(false);
+
+    const [successToggle, setSuccessToggle] = useState(false);
+    const [failedToggle, setFailedToggle] = useState(false);
+    const [popUpContent, setPopUpContent] = useState('');
 
       const handleOrderPopup = () => {
     setOrderPopup(!orderPopup);
@@ -48,10 +55,12 @@ const changespec = (ID)=>{
 }
     useEffect(() => {
         const fetchData = async () => {
+            
             try {
                 const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/app/products/${id}`);
                 setResponse(res.data.products || {});
                 setColors(res.data.colors || []);
+                setCategory(res.data.category.name || []);
                 console.log(res.data);
                 setSpecs(res.data.specs || {});
                 // fetching ratings
@@ -95,23 +104,32 @@ try{
             },
         });
         console.log(res.data);
-        alert("Product Added to wishlist");
+        setPopUpContent('Successfully added to wishlist');
+        setSuccessToggle(true);
 }
-catch(err){throw new Error(err);}
+catch(err){
+    setPopUpContent('Product already added to wishlist');
+    setFailedToggle(true);
+    console.log(err);}
 }
 
 const AddtoCart= async()=>{
 
 try{
+    
     const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/app/add-to-cart/${id}?count=${count}&color=${colors.color}&specs=${specs.specs}`,{
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
             },
         });
         console.log(res.data);
-        alert("Product Added to cart");
+        setPopUpContent('Successfully added to cart');
+        setSuccessToggle(true);
 }
-catch(err){throw new Error(err);}
+catch(err){
+    setPopUpContent('Already added to cart');
+    setFailedToggle(true);
+    throw new Error(err);}
 
   }
     colors  = colorsArr[0];
@@ -131,11 +149,13 @@ catch(err){throw new Error(err);}
         <div className='md:w-1/2 ml-5 text-sm dark:text-stone-400 space-y-4 mt-10 overflow-hidden'>
             <div className='font-Medium  text-3xl dark:text-white'>{response.name}</div>
             <div className='text-lg font-light dark:text-white'>Available Specs:</div>
-            {specsArr.map( e=>
-                    <div className={` py-[2px]  cursor-pointer ${specs.specs === e.specs ? ' text-brandYellow border-brandYellow': 'border-stone-500'}`}>
+            <div className='flex space-x-2'>
+                {specsArr.map( e=>
+                    <div className={`border-[1px] px-4 rounded-md py-[2px]  cursor-pointer ${specs.specs === e.specs ? ' text-brandYellow border-brandYellow': 'border-stone-500'}`}>
                         <button  onClick={changespec} value={e.specs}>{e.specs}</button>
                     </div>
                 )}
+            </div>
             
             <div className='text-lg font-light dark:text-white'>Available Colors:</div>
             <div className='space-x-2'>{colorsArr.map(e=>{
@@ -145,11 +165,13 @@ catch(err){throw new Error(err);}
             })}</div>
             <div className='text-lg font-light dark:text-white'>Items Left:</div>
             <div>{colors.item_count}</div>
-            <div className='text-md font-light  cursor-pointer space-x-3'><span className='dark:text-white'>
+            <div className='text-lg font-light dark:text-white'>Category:</div>
+            <div>{category}</div>
+            <div className='text-md font-light   space-x-3'><span className='dark:text-white text-lg'>
                 Quantity</span>
-            <span onClick={SubtractCount} >-</span>
-            <span>{count}</span>
-            <span onClick={AddCount}>+</span>
+            <span onClick={SubtractCount} className='text-3xl cursor-pointer'>-</span>
+            <span className='text-white text-lg'>{count}</span>
+            <span onClick={AddCount}  className='text-3xl cursor-pointer'>+</span>
             </div>
             <div className='text-2xl font-medium dark:text-white relative pl-3 mb-20'>
                 <span className='text-sm absolute left-0'>$</span>{specs.price ? specs.price : response.price}</div>
@@ -162,7 +184,7 @@ catch(err){throw new Error(err);}
     </div>}
     <div className='p-5 rounded-lg m-5 dark:bg-gray-500 bg-gray-200'>
         <div className='text-2xl font-light dark:text-white'>Ratings:</div>
-        <span className='text-4xl font-bold text-black'>{stars}</span><span className='mt-4 text-gray-400 ml-2'>out of 5</span>
+        <span className='text-4xl font-bold text-black dark:text-white'>{stars ? stars : 0}</span><span className='mt-4 text-gray-400 ml-2'>out of 5</span>
         <div className='flex'>
             <Ratings stars={stars}/><div className='text-gray-100 pt-1 px-5'>{ratings?.length}<span className='pl-2'>Ratings</span></div> 
         </div>
@@ -187,6 +209,8 @@ catch(err){throw new Error(err);}
         <div className='dark:text-brandYellow'>{response.desc}</div>
 
     </div>
+    <Fail_popup openWindow={failedToggle} setOpenWindow={setFailedToggle} content={popUpContent}/>
+    <Success_popup openWindow={successToggle} setOpenWindow={setSuccessToggle} content={popUpContent}/>
 </div>
   )
 }

@@ -68,9 +68,9 @@ const Home = () => {
       <Category2 />
       <Services />
       <Banner data={BannerData} />
-      <Products />
+      <Products/>
       <Banner data={BannerData2} />
-      <Blogs />
+      {/* <Blogs /> */}
       <Partners />
       <Footer />
       <Popup orderPopup={orderPopup} handleOrderPopup={handleOrderPopup} />

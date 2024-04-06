@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Heading from "../Shared/Heading";
 import ProductCard from "./ProductCard";
 
@@ -10,6 +10,7 @@ import Img4 from "../../assets/product/p-4.jpg";
 import Img5 from "../../assets/product/p-5.jpg";
 import Img6 from "../../assets/product/p-9.jpg";
 import Img7 from "../../assets/product/p-7.jpg";
+import axios from "axios";
 
 const ProductsData = [
   {
@@ -72,14 +73,44 @@ const ProductsData2 = [
   },
 ];
 const Products = () => {
+  const [response, setResponse] = React.useState([]);
+  const [colors, setColors] = React.useState([]);
+  const [productData, setProductData] = useState(ProductsData)
+  useEffect(() => {
+        const fetchData = async () => {
+            try {
+                
+                const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/app/user-recommendation`,{
+                  headers:{
+                  Authorization: `Bearer ${localStorage.getItem('token')}`
+                  }
+                });
+                let products = [];
+                res.data.products.map((product,idx) => products.push({
+                  id: product.id,
+                  title: product.name,
+                  price: product.price,
+                  img: `${import.meta.env.VITE_SERVER_URL}/images/${res.data.colors[idx].imageuri}`
+                }))
+                setProductData(products);
+                // setResponse(res.data.products);
+                // setColors(res.data.colors);
+                console.log(res.data);
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        fetchData();
+}, []); 
   return (
     <div>
       <div className="container">
         {/* Header section */}
         <Heading title="Our Products" subtitle={"Explore Our Products"} />
         {/* Body section */}
-        <ProductCard data={ProductsData} />
-        <ProductCard data={ProductsData2} />
+        <ProductCard data={productData} />
+        {/* <ProductCard data={ProductsData2} /> */}
       </div>
     </div>
   );

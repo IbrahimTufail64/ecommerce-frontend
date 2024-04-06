@@ -65,7 +65,6 @@ useEffect(() => {
                 const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/app/products/?category=${category}&price=${price}&page=${page}`);
                 setResponse(res.data.products);
                 setColors(res.data.colors);
-                localStorage.setItem("colors", JSON.stringify(res.data.colors)); // Storing colors in localStorage
             } catch (err) {
                 console.error(err);
             }

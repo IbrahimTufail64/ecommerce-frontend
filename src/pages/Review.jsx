@@ -12,12 +12,15 @@ const Review = () => {
     const [orderPopup, setOrderPopup] = useState(false);
     const navigate = useNavigate();
 
+    const {setSuccessToggle,setFailedToggle, setPopUpContent} = useContext(context); 
+
     useEffect(()=>{if(!rating.order_id) {navigate('/orders')} },[])
     const handleOrderPopup = () => {
             setOrderPopup(!orderPopup);
         };
     
 
+    
     const handleSubmit = async(e) => {
         e.preventDefault();
         rating.comment = comment;
@@ -31,9 +34,14 @@ const Review = () => {
                 })
             .then((res) => {
                     console.log(res)
+                    setPopUpContent('Review Added!');
+                    setSuccessToggle(true);
+                    navigate('/orders')
                 })
             .catch((err) => {
-                    console.log(err)
+                    setPopUpContent(err.response.data.message);
+                    setFailedToggle(true);
+                    console.log(err.response.data.message)
                 })
         }
         catch(err){
@@ -47,7 +55,7 @@ const Review = () => {
         <p className="mt-6  text-3xl md:text-5xl pb-10 font-light text-primary h-full">
             Review Page
           </p>
-            <div  className="text-primary text-2xl mb-4">Post as: {localStorage.getItem('UserName')}</div>
+            <div  className="text-white text-3xl font-light mb-4">Post as: {localStorage.getItem('UserName')}</div>
             {/* Rating System */}
             <label className="text-white">Leave a Rating</label>
             <div class="flex items-center m-5">

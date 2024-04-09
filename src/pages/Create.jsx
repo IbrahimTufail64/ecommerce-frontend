@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Color from '../components/ProductColor/Color';
 import { IoAddOutline } from "react-icons/io5";
 import { FaSquareMinus } from "react-icons/fa6";
@@ -6,6 +6,7 @@ import Specs from '../components/ProductSpecs/Specs';
 import axios from 'axios';
 import Navbar from '../components/Navbar/Navbar';
 import Sidebar from '../components/SideBar/Sidebar';
+import { context } from '../App';
 
 
 const Create = () => {
@@ -18,6 +19,8 @@ const Create = () => {
     const [price, setPrice] = useState([1]);
     const [count, setCount] = useState([1]);
     const [orderPopup, setOrderPopup] = React.useState(false);
+
+     const {setSuccessToggle,setFailedToggle, setPopUpContent} = useContext(context);
 
     const createColor = () =>{
         setColor([...color,'']);
@@ -74,10 +77,17 @@ const Create = () => {
           }
         }).then( e => {
             console.log(e.data)
+            setPopUpContent('Product Created Sucessfully!');
+          setSuccessToggle(true);
         })
-        .catch(e=> console.log(e.data))
+        .catch(e=> {
+            setPopUpContent(err.response.data.message);
+          setFailedToggle(true);
+            console.log(e)})
         }
         catch(e){
+            setPopUpContent('Something went wrong with the server!'); 
+          setFailedToggle(true);
             throw new Error(e);
         }
     }

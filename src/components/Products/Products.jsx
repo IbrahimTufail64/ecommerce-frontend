@@ -73,8 +73,8 @@ const ProductsData2 = [
   },
 ];
 const Products = () => {
-  const [response, setResponse] = React.useState([]);
-  const [colors, setColors] = React.useState([]);
+  const [showRec, setShowRec] = useState(true); 
+
   const [productData, setProductData] = useState(ProductsData)
   useEffect(() => {
         const fetchData = async () => {
@@ -84,7 +84,7 @@ const Products = () => {
                   headers:{
                   Authorization: `Bearer ${localStorage.getItem('token')}`
                   }
-                });
+                }).catch(err => {setShowRec(false);})
                 let products = [];
                 res.data.products.map((product,idx) => products.push({
                   id: product.id,
@@ -97,6 +97,7 @@ const Products = () => {
                 // setColors(res.data.colors);
                 console.log(res.data);
             } catch (err) {
+              setShowRec(false);
                 console.error(err);
             }
         };
@@ -105,9 +106,9 @@ const Products = () => {
 }, []); 
   return (
     <div>
-      <div className="container">
+      <div className={`container ${showRec && 'hidden'}`}>
         {/* Header section */}
-        <Heading title="Our Products" subtitle={"Explore Our Products"} />
+        <Heading title="Products Recommendation" subtitle={"Explore Our Products"} />
         {/* Body section */}
         <ProductCard data={productData} />
         {/* <ProductCard data={ProductsData2} /> */}

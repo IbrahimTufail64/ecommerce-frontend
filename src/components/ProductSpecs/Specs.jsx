@@ -21,7 +21,7 @@ const Specs = ({specs,setSpecs,price,setPrice,index}) => {
                 onChange={(e)=>{changeSpecs(e)}}
             />
             <label className="">Price</label>
-            <input type="number" min='1'  className=" appearance-none mb-5 relative block md:w-full px-3 py-2 border-b-2 text-white border-gray-400 bg-inherit focus:outline-none max-w-[250px] focus:z-10 sm:text-sm"
+            <input type="number" min='1' required  className=" appearance-none mb-5 relative block md:w-full px-3 py-2 border-b-2 text-white border-gray-400 bg-inherit focus:outline-none max-w-[250px] focus:z-10 sm:text-sm"
                 value={price[index]}
                 onChange={(e)=>{changePrice(e)}}
             />

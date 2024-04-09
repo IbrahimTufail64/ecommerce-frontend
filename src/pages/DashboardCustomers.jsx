@@ -3,6 +3,7 @@ import Sidebar from '../components/SideBar/Sidebar'
 import Navbar from '../components/Navbar/Navbar'
 import Dropdown from '../components/Dropdown/Dropdown';
 import axios from 'axios';
+import Notifications from '../components/DashboardNotifications/Notifications';
 
 const DashboardCustomers = () => {
 const [orderPopup, setOrderPopup] = React.useState(false);
@@ -62,7 +63,7 @@ useEffect(() => {
             {
                 customers.map(customer => (
                     <div className='flex justify-between items-center border border-slate-800 p-4 rounded-md'>
-                        <div className='w-[60px] h-[60px] object-cover rounded-full overflow-hidden '><img src={customer.profileuri ? customer.profileuri : 'https://i.pinimg.com/564x/39/94/fb/3994fb52d1f983d003ed6f084366bdab.jpg'} alt='Profile image'/> </div>
+                        <div className='w-[60px] h-[60px] object-cover rounded-full overflow-hidden '><img src={customer.profileuri ? `${import.meta.env.VITE_SERVER_URL}/images/${customer.profileuri}` : 'https://i.pinimg.com/564x/39/94/fb/3994fb52d1f983d003ed6f084366bdab.jpg'} alt='Profile image'/> </div>
                         <div className=' text-left'>{customer.name}</div>
                         <div className='w-[150px] text-slate-400 text-sm text-left'>{customer.address}</div>
                         <div>{customer.email}</div>
@@ -76,6 +77,11 @@ useEffect(() => {
     </div>
     <div className=' bg-dashboardPrimary p-6 w-2/5 rounded-md'>
          <div className='text-3xl font-semibold mb-5'>Notifications</div>
+         <div className='space-y-3'>
+            {notifications.map( n => (
+                <Notifications notification={n}/>
+            ))}
+         </div>
     </div>
 </div>
 

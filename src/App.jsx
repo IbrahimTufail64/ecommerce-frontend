@@ -17,6 +17,8 @@ import DashboardProducts from "./pages/DashboardProducts.jsx";
 import Modal from "./components/ConfirmModal/Modal.jsx";
 import EditProduct from "./pages/EditProduct.jsx";
 import DashboardCustomers from "./pages/DashboardCustomers.jsx";
+import Success_popup from "./components/PopUp_Messages/Success_popup.jsx";
+import Fail_popup from "./components/PopUp_Messages/Fail_popup.jsx";
 
 export const context = createContext();
 
@@ -25,10 +27,15 @@ const App = () => {
   const [seller,setSeller] = useState(false);
   const [orderPopup, setOrderPopup] = useState(false);
   const [rating, setRatings] = useState({});
+  // Pop up states
+  const [successToggle, setSuccessToggle] = useState(false);
+    const [failedToggle, setFailedToggle] = useState(false);
+    const [popUpContent, setPopUpContent] = useState('');
+
 
   return (
     <main className="relative">
-      <context.Provider value={{orderinfo,setOrderinfo,seller,setSeller,orderPopup,setOrderPopup,rating,setRatings}}>
+      <context.Provider value={{orderinfo,setOrderinfo,seller,setSeller,orderPopup,setOrderPopup,rating,setRatings,setSuccessToggle,setFailedToggle,setPopUpContent}}>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />}>
@@ -50,6 +57,8 @@ const App = () => {
         <Route path="/dashboard/products/edit/:id" element={<EditProduct />}></Route>
       </Routes>
     </BrowserRouter>
+        <Fail_popup openWindow={failedToggle} setOpenWindow={setFailedToggle} content={popUpContent}/>
+    <Success_popup openWindow={successToggle} setOpenWindow={setSuccessToggle} content={popUpContent}/>
     </context.Provider>
     </main>
   );

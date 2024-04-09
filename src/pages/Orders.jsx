@@ -4,6 +4,7 @@ import axios from 'axios';
 import Navbar from '../components/Navbar/Navbar';
 import { context } from '../App';
 import { useNavigate } from 'react-router-dom';
+import notFound from '../assets/notFound.png'
 
 const Orders = () => {
         const [orderPopup, setOrderPopup] = useState(false); 
@@ -32,6 +33,7 @@ const Orders = () => {
             
             }
             catch(err){
+              setOrders('not Found')
                 throw new Error(err);
             }
             }
@@ -46,7 +48,12 @@ const Orders = () => {
     <Navbar handleOrderPopup={handleOrderPopup} />
     <div className='px-7'>
       <div className='text-4xl font-semibold text-primary mb-5 mt-16'>Order History</div>
-      {orders.map((order, index) => { let sum = 0;
+      { orders === 'not Found' && <div className='flex justify-center '>
+            <div className=''><img src={notFound} />
+                <div className='my-10 text-3xl font-light text-center'>You havent ordered anything yet!</div>
+            </div>
+        </div>}
+      {orders.length>0 ? orders.map((order, index) => { let sum = 0;
       
         return (
             <div key={index} className='space-y-4 border-primary border-b-2 py-10  mb-10'>
@@ -76,7 +83,7 @@ const Orders = () => {
         <p className='  font-semibold pb-5'>Sub Total:<span className='text-primary px-5'>{sum}</span> </p>
         </div> 
         )
-})}
+}): <div className='py-8 px-10 text-3xl'>Loading...</div>}
           
     </div>
     <Footer/>

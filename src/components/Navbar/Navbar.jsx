@@ -8,28 +8,35 @@ import { Fade as Hamburger } from 'hamburger-react'
 import axios from "axios";
 
 
-export const verifyUser = async()=>{
+
+export const verifyUser = async(setSeller)=>{
+  // const {setSeller} = useContext(context);
       try{
-        await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/user/veirfy-user`,{
+        await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/user/verify-user`,{
           headers:{
             Authorization: `Bearer ${localStorage.getItem('token')}`
           }
-        }).then( e => console.log(e.data))
-        .catch(e=> console.log(e.data))
+        }).then( e => setSeller(e.data.Role))
+        .catch(e=> {
+          emptyCredentials();
+          console.log(e.data)})
       }
       catch(err){
-        localStorage.setItem('Email','');
-        localStorage.setItem('token','');
-        localStorage.setItem('Address','');
-        localStorage.getItem('UserName');
+        emptyCredentials();
         throw new Error(err);}
 }
 
+const emptyCredentials = ()=>{
+  localStorage.setItem('Email','');
+        localStorage.setItem('token','');
+        localStorage.setItem('Address','');
+        localStorage.setItem('UserName','');
+}
 
 const Navbar = ({ handleOrderPopup }) => {
-  const {seller,orderPopup, setOrderPopup} = useContext(context);
+  const {seller,setSeller,orderPopup, setOrderPopup} = useContext(context);
   useEffect(()=>{
-    verifyUser();
+    verifyUser(setSeller);
     console.log(seller)
   })
 const MenuLinks = [

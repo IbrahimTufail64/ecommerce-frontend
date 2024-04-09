@@ -35,33 +35,19 @@ const handleSubmit = async(e) => {
 }
 const handleNext = async(e) => {
   e.preventDefault();
-            try {
-                setPage(page+1);
-                const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/app/products/?search=M2&category=${category}&price=${price}&page=${page}`);
-                setResponse(res.data.products);
-                setColors(res.data.colors);
-                localStorage.setItem("colors", JSON.stringify(res.data.colors)); // Storing colors in localStorage
-            } catch (err) {
-                console.error(err);
-            }
+  setPage(page+1);
+
 }
 const handlePrevious = async(e) => {
   e.preventDefault();
-            try {
-                setPage(page-1);
-                const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/app/products/?search=M2&category=${category}&price=${price}&page=${page}`);
-                setResponse(res.data.products);
-                setColors(res.data.colors);
-                localStorage.setItem("colors", JSON.stringify(res.data.colors)); // Storing colors in localStorage
-            } catch (err) {
-                console.error(err);
-            }
+  setPage(page-1);
+            
 }
 
 useEffect(() => {
         const fetchData = async () => {
             try {
-                
+                console.log(page);
                 const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/app/products/?category=${category}&price=${price}&page=${page}`);
                 setResponse(res.data.products);
                 setColors(res.data.colors);
@@ -71,7 +57,7 @@ useEffect(() => {
         };
 
         fetchData();
-}, []); 
+}, [page]); 
 
 const handleSearch = async(e)=>{
   e.preventDefault();
@@ -116,7 +102,7 @@ console.log(response)
         
         <form onSubmit = {handleSubmit}>
           <div className='m-3 mb-5 font-bold text-lg' >Filter</div>
-        <div className='m-3'>Categories</div>
+        <div className='m-3 text-2xl font-light'>Categories</div>
         <div className="relative group ">
               <input
                 type="text"
@@ -130,16 +116,25 @@ console.log(response)
               <IoMdSearch className="text-xl text-gray-600 group-hover:text-primary dark:text-gray-400 absolute top-1/2 -translate-y-1/2 left-[180px] duration-200" />
         </div>
         
-        <div className='m-3'>Price</div>
+        <div className='m-3 text-2xl font-light'>Price</div>
       <div className='m-4'>
-        <input type="radio" id="html" name="price" value="100" onChange={e => setPrice(e.target.value)}/>
-            <label for="100" className='text-slate-500 mr-10 ml-2'>0-$100</label>
-          <input type="radio" id="css" name="price" value="300" onChange={e => setPrice(e.target.value)}/>
-          <label for="300" className='text-slate-500 ' >100-$300</label><br/>
-          <input type="radio" id="1000" name="price" value="1000" onChange={e => setPrice(e.target.value)}/>
-          <label for="1000" className='text-slate-500 mr-5 ml-2'>300-$1000</label>
-          <input type="radio" id="2000" name="price" value="2000" onChange={e => setPrice(e.target.value)}/>
-          <label for="2000" className='text-slate-500 '>&lt;$1000</label>
+        <div class="flex items-center mb-4">
+            <input type="radio" id="html" name="price" value="100" onChange={e => setPrice(e.target.value)} class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+            <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">0-$100</label>
+        </div>
+        <div class="flex items-center mb-4">
+            <input type="radio" id="css" name="price" value="300" onChange={e => setPrice(e.target.value)} class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+            <label for="default-radio-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">100-$300</label>
+        </div>
+        <div class="flex items-center mb-4">
+            <input type="radio" id="1000" name="price" value="1000" onChange={e => setPrice(e.target.value)} class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+            <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">300-$1000</label>
+        </div>
+        <div class="flex items-center">
+            <input type="radio" id="2000" name="price" value="2000" onChange={e => setPrice(e.target.value)} class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+            <label for="default-radio-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">&lt;$1000</label>
+        </div>
+        
       </div>
         <input type='submit' value='Search' className='rounded-full mt-5 ml-5 px-16 py-1 bg-secondary text-white cursor-pointer'/>
         </form>

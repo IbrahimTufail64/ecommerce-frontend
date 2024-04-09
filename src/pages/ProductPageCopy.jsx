@@ -1,13 +1,12 @@
  import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import Navbar from '../components/Navbar/Navbar';
 import { IoClose } from "react-icons/io5";
 import { FaShoppingCart  } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import Ratings from '../components/Rating/ratings';
-import Success_popup from '../components/PopUp_Messages/Success_popup';
-import Fail_popup from '../components/PopUp_Messages/Fail_popup';
+import { context } from '../App';
 
 
 const ProductPageCopy = () => {
@@ -17,14 +16,13 @@ const ProductPageCopy = () => {
     const [ratings, setRatings] = useState([]);
     const [category, setCategory] = useState('');
     const [user, setUser] = useState([]);
-    const [stars, setStars] = useState();
+    const [stars, setStars] = useState(0);
     const [specsArr, setSpecs] = useState([{specs: ""}])
     const [count, setCount] = useState(1);
     const [orderPopup, setOrderPopup] = React.useState(false);
 
-    const [successToggle, setSuccessToggle] = useState(false);
-    const [failedToggle, setFailedToggle] = useState(false);
-    const [popUpContent, setPopUpContent] = useState('');
+
+    const {setSuccessToggle,setFailedToggle, setPopUpContent} = useContext(context);
 
       const handleOrderPopup = () => {
     setOrderPopup(!orderPopup);
@@ -73,7 +71,9 @@ const changespec = (ID)=>{
                     res.data.ratings.map((e)=>{
                         sum += e.review
                     });
-                    setStars(parseFloat(sum/res.data.ratings.length));
+                    let avg = parseFloat(sum/res.data.ratings.length);
+                    if(!avg) avg =0;
+                    setStars(avg.toFixed(2));
                     
                 })
             } catch (error) {
@@ -178,7 +178,7 @@ catch(err){
             <button className='disabled:opacity-50 bg-secondary px-10 py-2 rounded-[2px] text-white font-light text-xl space-x-8 mt-20'
         onClick ={()=>{AddtoCart()}} disabled={colors.item_count==0}><span>Add to Cart</span> <FaShoppingCart  className='inline text-xl' /></button>
             <button className='disabled:opacity-50 bg-secondary px-5 py-2 rounded-[2px] text-white font-light text-xl space-x-8 ml-2'
-        onClick ={()=>{AddtoWishlist()}} disabled={colors.item_count==0}> <FaRegHeart  className='inline text-xl' /></button>
+        onClick ={()=>{AddtoWishlist()}} disabled={colors.item_count!==0}> <FaRegHeart  className='inline text-xl' /></button>
         </div>
         
     </div>}
@@ -209,8 +209,7 @@ catch(err){
         <div className='dark:text-brandYellow'>{response.desc}</div>
 
     </div>
-    <Fail_popup openWindow={failedToggle} setOpenWindow={setFailedToggle} content={popUpContent}/>
-    <Success_popup openWindow={successToggle} setOpenWindow={setSuccessToggle} content={popUpContent}/>
+
 </div>
   )
 }

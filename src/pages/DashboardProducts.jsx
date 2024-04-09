@@ -39,13 +39,15 @@ const [orderPopup, setOrderPopup] = React.useState(false);
                 console.log(res.data)
                 // console.log(products)
                 if(  page == 1 ){
-                    setProducts(products => {
+                
+                setProducts(products => {
                       return    [...res.data.products]
                     });
                 setProductColors(colors => {
                     return [...res.data.colors]});
                 }
                 else{
+                    console.log(page)
                     setProducts(products => {
                         const productSet = new Set( [...products,...res.data.products])
                         return [...productSet]
@@ -102,7 +104,7 @@ const [orderPopup, setOrderPopup] = React.useState(false);
 
     useEffect(()=>{
         fetchProducts();
-    },[page,products])
+    },[page])
 
   return (
     <div className="bg-black text-white duration-200 overflow-hidden">

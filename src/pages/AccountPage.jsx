@@ -19,11 +19,9 @@ const AccountPage = () => {
   const [sum,setSum] = useState(0);
   const [cart,setCart] = useState([]);
   const {orderinfo,setOrderinfo} = useContext(context);
-// pop up setup
-  const [successToggle, setSuccessToggle] = useState(false);
-    const [failedToggle, setFailedToggle] = useState(false);
-    const [popUpContent, setPopUpContent] = useState('');
 
+
+    const {setSuccessToggle,setFailedToggle, setPopUpContent} = useContext(context);
   
 
   const navigate = useNavigate();
@@ -105,7 +103,6 @@ await axios.post(
 
 const handleLogout = async(e)=>{
         e.preventDefault();
-        console.log(localStorage.getItem('token'))
     try {
 await axios.get(
   `${import.meta.env.VITE_SERVER_URL}/api/user/logout`,
@@ -223,8 +220,8 @@ const handleCheckOut = async()=>{
     </div>
 
     <Footer/>
-    <Fail_popup openWindow={failedToggle} setOpenWindow={setFailedToggle} content={popUpContent}/>
-    <Success_popup openWindow={successToggle} setOpenWindow={setSuccessToggle} content={popUpContent}/>
+    {/* <Fail_popup openWindow={failedToggle} setOpenWindow={setFailedToggle} content={popUpContent}/>
+    <Success_popup openWindow={successToggle} setOpenWindow={setSuccessToggle} content={popUpContent}/> */}
     </div>
   )
 }

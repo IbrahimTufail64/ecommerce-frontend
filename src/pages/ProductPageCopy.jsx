@@ -5,7 +5,7 @@ import Navbar from '../components/Navbar/Navbar';
 import { IoClose } from "react-icons/io5";
 import { FaShoppingCart  } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
-import Ratings from '../components/Rating/ratings';
+import Ratings from '../components/Rating/Ratings';
 import { context } from '../App';
 
 

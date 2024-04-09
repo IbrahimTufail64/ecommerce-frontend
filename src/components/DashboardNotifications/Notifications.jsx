@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios';
 import { MdExpandMore } from "react-icons/md";
-import Ratings from '../Rating/ratings';
+import Ratings from '../Rating/Ratings';
 import { context } from '../../App';
 
 const Notifications = ({notification}) => {
@@ -49,6 +49,7 @@ const Notifications = ({notification}) => {
             throw new Error(err);
         }
     }
+
 
         const dismissComment = async()=>{
         try{

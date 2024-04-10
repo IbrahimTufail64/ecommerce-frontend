@@ -50,11 +50,6 @@ const MenuLinks = [
     name: "Shop",
     link: "/Products",
   },
-  {
-    id: 4,
-    name: "Blogs",
-    link: "/#blog",
-  },
 ];
 
 const DropdownLinks = [

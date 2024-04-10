@@ -138,6 +138,7 @@ catch(err){
   return (
     <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 overflow-hidden relative md:h-[1000px] lg:h-auto lg:pb-10">
     <Navbar handleOrderPopup={handleOrderPopup} />
+    <div className=' px-8'> <Link to='/Products' className='block md:hidden p-2 max-w-12 rounded-sm dark:bg-gray-800 '><IoClose className='text-3xl'/></Link></div>
     {response && 
     <div className='md:flex m-5'>
         <div className='md:w-1/2 mt-10'>

@@ -25,11 +25,11 @@ const Popup = ({ orderPopup, handleOrderPopup }) => {
               {/* Form secton */}
               <div className="mt-4 flex flex-col  text-xl font-semibold space-y-2 p-3">
                 
-                <a href={`/Porudcts`} className=" hover:text-primary transition-all">Shop</a>
+                <a href={`/Products`} className=" hover:text-primary transition-all">Shop</a>
                 <a href={`/`} className=" hover:text-primary transition-all">Home</a>
-                <a href={`/Account`} className=" hover:text-primary transition-all">Profile</a>
-                <a href={`/Login`} className=" hover:text-primary transition-all">Login</a>
-                {seller && <a href={`/Account`} className=" hover:text-primary transition-all">Dashboard</a>}
+                <a href={`/Account`} className={`hover:text-primary transition-all ${localStorage.getItem('token') === '' && 'hidden'}`}>Profile</a>
+                <a href={`/Login`} className={`hover:text-primary transition-all ${localStorage.getItem('token') !== '' && 'hidden'}`}>Login</a>
+                <a href={`/orders`} className={`hover:text-primary transition-all ${localStorage.getItem('token') === '' && 'hidden'}`}>Orders</a>
                 
                 <div className="flex justify-center">
                   <Button

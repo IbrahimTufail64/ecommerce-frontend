@@ -106,7 +106,7 @@ const Products = () => {
 }, []); 
   return (
     <div>
-      <div className={`container ${showRec && 'hidden'}`}>
+      <div className={`container ${!showRec && 'hidden'}`}>
         {/* Header section */}
         <Heading title="Products Recommendation" subtitle={"Explore Our Products"} />
         {/* Body section */}

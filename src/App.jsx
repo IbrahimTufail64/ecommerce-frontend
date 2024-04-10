@@ -19,6 +19,7 @@ import EditProduct from "./pages/EditProduct.jsx";
 import DashboardCustomers from "./pages/DashboardCustomers.jsx";
 import Success_popup from "./components/PopUp_Messages/Success_popup.jsx";
 import Fail_popup from "./components/PopUp_Messages/Fail_popup.jsx";
+import Popup from "./components/Popup/Popup.jsx";
 
 export const context = createContext();
 
@@ -32,6 +33,9 @@ const App = () => {
     const [failedToggle, setFailedToggle] = useState(false);
     const [popUpContent, setPopUpContent] = useState('');
 
+    const handleOrderPopup = () => {
+    setOrderPopup(!orderPopup);
+  };
 
   return (
     <main className="relative">
@@ -59,6 +63,7 @@ const App = () => {
     </BrowserRouter>
         <Fail_popup openWindow={failedToggle} setOpenWindow={setFailedToggle} content={popUpContent}/>
     <Success_popup openWindow={successToggle} setOpenWindow={setSuccessToggle} content={popUpContent}/>
+    <Popup orderPopup={orderPopup} handleOrderPopup={handleOrderPopup} />
     </context.Provider>
     </main>
   );

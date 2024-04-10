@@ -95,7 +95,7 @@ const DropdownLinks = [
             </a>
             <a
               onClick={()=>{navigate('/Login')}}
-              className={`${localStorage.getItem('Email') ? 'hidden': ' px-4'} inline-block cursor-pointer font-semibold text-gray-500 hover:text-black dark:hover:text-white duration-200`}
+              className={`${localStorage.getItem('Email') ? 'hidden': ' px-4'} md:inline-block hidden cursor-pointer font-semibold text-gray-500 hover:text-black dark:hover:text-white duration-200`}
             >
               Login
             </a>

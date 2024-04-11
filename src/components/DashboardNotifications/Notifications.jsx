@@ -5,7 +5,7 @@ import Ratings from '../Rating/Ratings';
 import { context } from '../../App';
 
 const Notifications = ({notification}) => {
-    const [customer, setCustomer] = useState({profileuri: null});
+    const [customer, setCustomer] = useState();
     const [open, setOpen] = useState(false);
     const [reply, setReply] = useState('')
     const [remove, setRemove] = useState(false);
@@ -99,13 +99,13 @@ const Notifications = ({notification}) => {
   return (
     <div className={`bg-[#111111] py-5 px-5 rounded-xl space-y-3 ${remove && 'hidden'}`}>
         <div className=' flex space-x-2 '>
-            <img className='w-[45px] h-[40px] bg-inherit object-cover rounded-full overflow-hidden ' src={customer.profileuri ? `${import.meta.env.VITE_SERVER_URL}/images/${customer.profileuri}` : 'https://i.pinimg.com/564x/39/94/fb/3994fb52d1f983d003ed6f084366bdab.jpg'} alt='Profile image'/> 
+            <img className='w-[45px] h-[40px] bg-inherit object-cover rounded-full overflow-hidden ' src={customer ? `${import.meta.env.VITE_SERVER_URL}/images/${customer.profileuri}` : 'https://i.pinimg.com/564x/39/94/fb/3994fb52d1f983d003ed6f084366bdab.jpg'} alt='Profile image'/> 
         <div className='flex justify-between w-full'>
            <div className={`max-w-[200px] ${!open && 'max-h-[100px] overflow-hidden'}`}>
-             <div className='font-semibold text-white'>@{customer.name}</div>
-             <div className='text-sm font-light text-slate-600'>{notification.comment}</div>
+             <div className='font-semibold text-white'>@{customer && customer.name}</div>
+             <div className='text-sm font-light text-slate-600'>{notification && notification.comment}</div>
            </div>
-            <div className='text-sm font-light text-white w-1/3'>{date}</div>
+            <div className='text-sm font-light text-white w-1/3'>{date && date}</div>
         </div>
     </div>
     <div className={`${!open && 'hidden'} pl-10`}>

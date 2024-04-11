@@ -74,6 +74,13 @@ const DropdownLinks = [
     link: `/${seller? 'dashboard': 'Login'}`,
   },
 ];
+var Loop = true;
+useEffect(()=>{
+  setTimeout(()=>{
+    Loop = !Loop
+  console.log('hey')
+},[1000])
+},[Loop])
   const navigate = useNavigate();
   return (
     <div className="bg-white dark:bg-gray-900 dark:text-white duration-200 relative z-40">

@@ -59,11 +59,11 @@ const App = () => {
         <Route path="/dashboard/products" element={<DashboardProducts />}></Route>
         <Route path="/dashboard/customers" element={<DashboardCustomers />}></Route>
         <Route path="/dashboard/products/edit/:id" element={<EditProduct />}></Route>
-      </Routes>
-    </BrowserRouter>
         <Fail_popup openWindow={failedToggle} setOpenWindow={setFailedToggle} content={popUpContent}/>
     <Success_popup openWindow={successToggle} setOpenWindow={setSuccessToggle} content={popUpContent}/>
     <Popup orderPopup={orderPopup} handleOrderPopup={handleOrderPopup} />
+      </Routes>
+    </BrowserRouter>
     </context.Provider>
     </main>
   );

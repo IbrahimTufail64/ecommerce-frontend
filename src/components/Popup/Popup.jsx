@@ -26,11 +26,11 @@ const Popup = ({ orderPopup, handleOrderPopup }) => {
               {/* Form secton */}
               <div className="mt-4 flex flex-col  text-xl font-semibold space-y-2 p-3">
                 
-                <Link href={`/Products`} className=" hover:text-primary transition-all">Shop</Link>
-                <Link href={`/`} className=" hover:text-primary transition-all">Home</Link>
-                <Link href={`/Account`} className={`hover:text-primary transition-all ${localStorage.getItem('token') === '' && 'hidden'}`}>Profile</Link>
-                <Link href={`/Login`} className={`hover:text-primary transition-all ${localStorage.getItem('token') !== '' && 'hidden'}`}>Login</Link>
-                <Link href={`/orders`} className={`hover:text-primary transition-all ${localStorage.getItem('token') === '' && 'hidden'}`}>Orders</Link>
+                <Link to={`/Products`} className=" hover:text-primary transition-all">Shop</Link>
+                <Link to={`/`} className=" hover:text-primary transition-all">Home</Link>
+                <Link to={`/Account`} className={`hover:text-primary transition-all ${localStorage.getItem('token') === '' && 'hidden'}`}>Profile</Link>
+                <Link to={`/Login`} className={`hover:text-primary transition-all ${localStorage.getItem('token') !== '' && 'hidden'}`}>Login</Link>
+                <Link to={`/orders`} className={`hover:text-primary transition-all ${localStorage.getItem('token') === '' && 'hidden'}`}>Orders</Link>
                 
                 <div className="flex justify-center">
                   <Button

@@ -9,7 +9,8 @@ const LoginForm = () => {
   const [Email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
-  const {setSeller} = useContext(context);
+  const {setSeller,setSuccessToggle,setFailedToggle, setPopUpContent} = useContext(context);
+
   const handleSubmit = async(e) => {
     e.preventDefault();
     if(!(Email && password)){throw new Error('All fields are required');}
@@ -25,17 +26,22 @@ const LoginForm = () => {
         localStorage.setItem("Address", response.data.address);
         setSeller(response.data.isSeller);
         localStorage.setItem("token", response.data.token);
-          alert("Login successful");
+          setPopUpContent('Logged in Successfully!');
+    setSuccessToggle(true);
           navigate("/Account");
         })
         .catch(function (error) {
           console.log(error);
+          setPopUpContent('Invalid field or input!');
+    setFailedToggle(true);
         });
         const cookieString = document.cookie;
         console.log(cookieString);
         
        
       } catch (error) {
+        setPopUpContent('Server Error!');
+    setFailedToggle(true);
         console.error("Error sending request:", error);
       }
 

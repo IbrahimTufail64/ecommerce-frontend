@@ -114,17 +114,23 @@ catch(err){
 }
 
 const AddtoCart= async()=>{
-
+    console.log('attempt')
 try{
     
     const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/app/add-to-cart/${id}?count=${count}&color=${colors.color}&specs=${specs.specs}`,{
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
             },
-        });
-        console.log(res.data);
-        setPopUpContent('Successfully added to cart');
+        }).then((e)=>{
+            setPopUpContent('Successfully added to cart');
         setSuccessToggle(true);
+        console.log(e.data);
+        }).catch(err =>{
+            setPopUpContent('Must be logged in to add to cart');
+    setFailedToggle(true);
+        })
+        console.log(res.data);
+
 }
 catch(err){
     setPopUpContent('Already added to cart');
@@ -176,7 +182,7 @@ catch(err){
             </div>
             <div className='text-2xl font-medium dark:text-white relative pl-3 mb-20'>
                 <span className='text-sm absolute left-0'>$</span>{specs.price ? specs.price : response.price}</div>
-            <button className='disabled:opacity-50 bg-secondary px-10 py-2 rounded-[2px] text-white font-light text-xl space-x-8 mt-20'
+            <button className='disabled:opacity-50 bg-secondary hover:opacity-90 px-10 py-2 rounded-[2px] text-white font-light text-xl space-x-8 mt-20'
         onClick ={()=>{AddtoCart()}} disabled={colors.item_count==0}><span>Add to Cart</span> <FaShoppingCart  className='inline text-xl' /></button>
             <button className='disabled:opacity-50 bg-secondary px-5 py-2 rounded-[2px] text-white font-light text-xl space-x-8 ml-2'
         onClick ={()=>{AddtoWishlist()}} disabled={colors.item_count!==0}> <FaRegHeart  className='inline text-xl' /></button>

@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect, useContext } from 'react';
 import { Link,useNavigate } from 'react-router-dom';
+import { context } from '../App';
 
 
 const Signup = () => {
@@ -9,13 +10,13 @@ const Signup = () => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [address, setAddress] = useState('');
-  const [Seller, setSeller] = useState(false);
+  const {setSuccessToggle,setFailedToggle, setPopUpContent} = useContext(context); 
   const navigate = useNavigate();
   const handleSubmit = async(e) => {
     e.preventDefault();
     if(!(Email && password)){throw new Error('All fields are required');}
     try {
-        await axios.post(" http://localhost:3000/api/user/register", {
+        await axios.post(`${import.meta.env.VITE_SERVER_URL}/api/user/register`, {
           email:Email,
           password,
           name,
@@ -28,10 +29,13 @@ const Signup = () => {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("Address", response.data.address);
         localStorage.setItem("Seller", response.data.isSeller);
-          alert("Login successful");
+          setPopUpContent('Successfully Signed up!');
+    setSuccessToggle(true);
           navigate("/");
         })
         .catch(function (error) {
+          setPopUpContent('Invalid Field or Input!');
+    setFailedToggle(true);
           console.log(error);
         });
         const cookieString = document.cookie;
@@ -39,6 +43,8 @@ const Signup = () => {
         
        
       } catch (error) {
+        setPopUpContent('Server Error!');
+    setFailedToggle(true);
         console.error("Error sending request:", error);
       }
 

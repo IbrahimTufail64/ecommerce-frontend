@@ -77,6 +77,7 @@ const Products = () => {
 
   const [productData, setProductData] = useState(ProductsData)
   useEffect(() => {
+    if(localStorage.getItem('token')=== '' || !localStorage.getItem('token')){setShowRec(false);}
         const fetchData = async () => {
             try {
                 

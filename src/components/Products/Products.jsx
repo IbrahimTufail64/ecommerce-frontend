@@ -75,7 +75,7 @@ const ProductsData2 = [
 const Products = () => {
   const [showRec, setShowRec] = useState(true); 
 
-  const [productData, setProductData] = useState(ProductsData)
+  const [productData, setProductData] = useState([])
   useEffect(() => {
     if(localStorage.getItem('token')=== '' || !localStorage.getItem('token')){setShowRec(false);}
         const fetchData = async () => {
@@ -93,6 +93,7 @@ const Products = () => {
                   price: product.price,
                   img: `${import.meta.env.VITE_SERVER_URL}/images/${res.data.colors[idx].imageuri}`
                 }))
+                console.log(res.data)
                 setProductData(products);
                 // setResponse(res.data.products);
                 // setColors(res.data.colors);
@@ -109,9 +110,23 @@ const Products = () => {
     <div>
       <div className={`container ${!showRec && 'hidden'}`}>
         {/* Header section */}
-        <Heading title="Products Recommendation" subtitle={"Explore Our Products"} />
+        {/* <Heading title="Products Recommendation" subtitle={"Explore Our Products"} /> */}
+        <div className=' items-center flex w-full justify-center  font-regular text-6xl'>Latest Arrival</div>
+          <div className=' items-center flex w-full justify-center opacity-50 text-md mt-2 mb-16'>Discover Our vast catalog of products</div>
         {/* Body section */}
-        <ProductCard data={productData} />
+        <div className="grid grid-cols-3 gap-6 mb-[50px]">
+          {productData.map(e=>
+              (<div className="bg-[#1F2C4A] flex-col flex overflow-hidden rounded-md h-[350px]" key={e.id}>
+                  <div className="flex-1 overflow-hidden flex justify-center items-center">
+                     <img src={e.img} className=' object-cover' alt="Product Image" />
+                  </div>
+                  <div className="px-[20px] py-[40px] pt-8"> 
+                    <div className="text-3xl font-semibold text-white">{e.title}</div>
+                    <div className="text-xl mt-3 opacity-50 font-semibold text-white">${e.price}</div>
+                  </div>
+              </div>)
+          )}</div>
+        {/* <ProductCard data={productData} /> */}
         {/* <ProductCard data={ProductsData2} /> */}
       </div>
     </div>

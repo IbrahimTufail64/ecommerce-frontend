@@ -20,6 +20,7 @@ import DashboardCustomers from "./pages/DashboardCustomers.jsx";
 import Success_popup from "./components/PopUp_Messages/Success_popup.jsx";
 import Fail_popup from "./components/PopUp_Messages/Fail_popup.jsx";
 import Popup from "./components/Popup/Popup.jsx";
+import HomePage from "./pages/HomePage.jsx";
 
 export const context = createContext();
 
@@ -59,6 +60,7 @@ const App = () => {
         <Route path="/dashboard/products" element={<DashboardProducts />}></Route>
         <Route path="/dashboard/customers" element={<DashboardCustomers />}></Route>
         <Route path="/dashboard/products/edit/:id" element={<EditProduct />}></Route>
+        <Route path="/home" element={<HomePage/>}></Route>
       </Routes>
         <Fail_popup openWindow={failedToggle} setOpenWindow={setFailedToggle} content={popUpContent}/>
     <Success_popup openWindow={successToggle} setOpenWindow={setSuccessToggle} content={popUpContent}/>

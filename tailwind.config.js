@@ -4,6 +4,10 @@ export default {
   darkMode: "class",
   theme: {
     extend: {
+      fontFamily: {
+        inter: ["Inter", "sans-serif"],
+        // Add more custom font families as needed
+      },
       colors: {
         primary: "#f42c37",
         tertiary: "#1E222D",

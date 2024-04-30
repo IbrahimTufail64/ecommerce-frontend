@@ -112,6 +112,18 @@ body{
   background-position: -100% 0;
   color: white;
 }
+/* for primary button  */
+.bg-transition2 {
+  background: linear-gradient(to right, transparent 50%, #ffffff 50%);
+  background-size: 200% 100%;
+  background-color: inherit !important;
+  transition: background-position 0.4s ease-out;
+}
+
+.bg-transition2:hover {
+  background-position: -100% 0;
+  color: #000000;
+}
 
 /* Hamburger Menu */
 .McButton {

@@ -43,7 +43,7 @@ const App = () => {
       <context.Provider value={{orderinfo,setOrderinfo,seller,setSeller,orderPopup,setOrderPopup,rating,setRatings,setSuccessToggle,setFailedToggle,setPopUpContent}}>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />}>
+        <Route path="/" element={<HomePage/>}>
         </Route>
         <Route path="/Products" element={<Products />}></Route>
         <Route path="/Product-page/:id" element={<ProductPageCopy />}></Route>
@@ -60,7 +60,7 @@ const App = () => {
         <Route path="/dashboard/products" element={<DashboardProducts />}></Route>
         <Route path="/dashboard/customers" element={<DashboardCustomers />}></Route>
         <Route path="/dashboard/products/edit/:id" element={<EditProduct />}></Route>
-        <Route path="/home" element={<HomePage/>}></Route>
+        {/* <Route path="/home" element={<Home/>}></Route> */}
       </Routes>
         <Fail_popup openWindow={failedToggle} setOpenWindow={setFailedToggle} content={popUpContent}/>
     <Success_popup openWindow={successToggle} setOpenWindow={setSuccessToggle} content={popUpContent}/>

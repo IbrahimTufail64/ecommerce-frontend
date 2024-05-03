@@ -23,13 +23,13 @@ const Timer = () => {
   } = useTimer({ expiryTimestamp, onExpire: () => console.warn('onExpire called') });
 
   return (
-    <div className='w-full flex bg-[#F3F6FB] justify-between relative h-[65vh] p-[25px] mb-[120px]'>
-          <div className='w-[30%] mt-[70px] ml-[30px]'>
-            <div className='text-[65px] text-black font-semibold'>Limited Weekly Discount</div>
+    <div className='w-full md:flex bg-[#F3F6FB] justify-between relative md:h-[65vh] p-[25px] mb-[120px]'>
+          <div className='md:w-[30%] mt-[70px] ml-[30px] mb-10 md:mb-0'>
+            <div className='text-5xl md:text-[65px] text-black font-semibold'>Limited Weekly Discount</div>
             <div className='text-black text-xl opacity-70 '>Claim your favorite products on unbelievable prices</div>
           </div>
-          <div className='absolute flex w-full justify-center '><img className='w-[45%] pr-16' src={Watch}/></div>
-          <div className='w-1/3 pt-10 pl-16'>
+          <div className='absolute flex w-full justify-center '><img className='md:w-[35%] md:pr-16' src={Watch}/></div>
+          <div className='md:w-1/3 pt-10 md:pl-16  mt-[400px] md:mt-0'>
             <div className='text-[35px] text-black font-semibold'>Ends in</div>
             <div className='flex space-x-2 my-4'>
               <div className='w-[100px] border-2 h-[100px] rounded-lg relative'>

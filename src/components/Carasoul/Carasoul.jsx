@@ -29,7 +29,7 @@ const Carasoul = ({slides}) => {
             <IoIosArrowBack size={50} className='cursor-pointer ' onClick={()=>prev()}/>
             <IoIosArrowForward size={50} className='cursor-pointer' onClick={()=>next()}/>
         </div> */}
-        <Carousel autoPlay emulateTouch infiniteLoop showStatus={false}>
+        <Carousel autoPlay emulateTouch infiniteLoop showStatus={false} showThumbs={false}>
             {slides.map(a=>(
                 <div className='w-[100vw] text-left'>{a}</div>
             ))}

@@ -1,122 +1,61 @@
 import React from "react";
-import { FaMobileAlt } from "react-icons/fa";
-import {
-  FaFacebook,
-  FaInstagram,
-  FaLinkedin,
-  FaLocationArrow,
-} from "react-icons/fa6";
+import { FaGooglePlay } from "react-icons/fa";
+import { FaApple } from "react-icons/fa";
+import { FaFacebook } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa";
+import { FaSquareXTwitter } from "react-icons/fa6";
+import { AiFillInstagram } from "react-icons/ai";
+import { FaPhoneAlt } from "react-icons/fa";
+import { IoMail } from "react-icons/io5";
+import { FaLocationDot } from "react-icons/fa6";
 
-const FooterLinks = [
-  {
-    title: "Home",
-    link: "/#",
-  },
-  {
-    title: "About",
-    link: "/#about",
-  },
-  {
-    title: "Contact",
-    link: "/#contact",
-  },
-  {
-    title: "Blog",
-    link: "/#blog",
-  },
-];
 
 const Footer = () => {
   return (
-    <div className="dark:bg-gray-950">
+    <div className="dark:bg-gray-950 bg-slate-50">
       <div className="container">
-        <div className="grid md:grid-cols-3 pb-20 pt-5">
+        <div className="space-y-24 pl-6 md:pl-0 md:space-y-0 flex justify-between flex-wrap pb-20 pt-[80px]">
           {/* company details */}
-          <div className="py-8 px-4">
-            <a
-              href="#"
-              className="text-primary font-semibold tracking-widest text-2xl uppercase sm:text-3xl
-"
-            >
-              Eshop
-            </a>
-            <p className="text-gray-600 dark:text-white/70  lg:pr-24 pt-3">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Maiores
-              alias cum
-            </p>
+          <div className="space-y-5">
+            <div className="text-3xl font-semibold">Download Our App
+              <div className="dark:bg-white w-[40px] h-[5px] mt-2"></div>
+            </div>
             
-            <a
-              href="#"
-              target="_blank"
-              className="inline-block bg-primary/90 text-white py-2 px-4 mt-4 text-sm rounded-full"
-            >
-              Visit the Creator's page
-            </a>
+            <div className="flex space-x-5"><FaGooglePlay size={25}/><div className="text-2xl">Google Play</div></div>
+            <div className="flex space-x-5"><FaApple size={33}/><div className="text-2xl">App Store</div></div>
           </div>
 
           {/* Footer links */}
-          <div className="col-span-2 grid grid-cols-2 sm:grid-cols-3 md:pl-10">
-            <div className="py-8 px-4">
-              <h1 className="text-xl font-bold sm:text-left mb-3">
-                Important Links
-              </h1>
-              <ul className="space-y-3">
-                {FooterLinks.map((data, index) => (
-                  <li key={index}>
-                    <a
-                      href={data.link}
-                      className="text-gray-600 dark:text-gray-400 hover:dark:text-white hover:text-black duration-300"
-                    >
-                      {data.title}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+          <div className="space-y-5">
+            <div className="text-3xl font-semibold">Follow us on
+              <div className="dark:bg-white w-[40px] h-[5px] mt-2"></div>
             </div>
-            {/* second col links */}
-            <div className="py-8 px-4">
-              <h1 className="text-xl font-bold sm:text-left mb-3">
-                Quick Links
-              </h1>
-              <ul className="space-y-3">
-                {FooterLinks.map((data, index) => (
-                  <li key={index}>
-                    <a
-                      href={data.link}
-                      className="text-gray-600 dark:text-gray-400 hover:dark:text-white hover:text-black duration-300"
-                    >
-                      {data.title}
-                    </a>
-                  </li>
-                ))}
-              </ul>
+            
+            <div className="flex space-x-5">
+              <FaFacebook size={25}/>
+              <FaLinkedin size={25}/>
+              <FaSquareXTwitter size={25}/>
+              <AiFillInstagram size={25}/>
             </div>
-
-            {/* Company Address */}
-            <div className="py-8 px-4 col-span-2 sm:col-auto">
-              <h1 className="text-xl font-bold sm:text-left mb-3">Address</h1>
-              <div>
-                <div className="flex items-center gap-3">
-                  <FaLocationArrow />
-                  <p>Lamptin Garden, 7th Street</p>
-                </div>
-                <div className="flex items-center gap-3 mt-6">
-                  <FaMobileAlt />
-                  <p>+92 303-9111032</p>
-                </div>
-
-                {/* social links */}
-                <div className="flex items-center gap-3 mt-6">
-                  <a href="#">
-                    <FaInstagram className="text-3xl hover:text-primary duration-300" />
-                  </a>
-                  <a href="#">
-                    <FaFacebook className="text-3xl hover:text-primary duration-200" />
-                  </a>
-                  <a href="#">
-                    <FaLinkedin className="text-3xl hover:text-primary duration-200" />
-                  </a>
-                </div>
+          </div>
+          {/* Contact Us */}
+          <div className="space-y-5">
+            <div className="text-3xl font-semibold">Contact Us
+              <div className="dark:bg-white w-[40px] h-[5px] mt-2"></div>
+            </div>
+            
+            <div className="space-y-5">
+              <div className="flex space-x-3">
+                <FaPhoneAlt size={20}/>
+                <div>+92 303 9111032</div>
+              </div>
+              <div className="flex space-x-3">
+                <IoMail size={20}/>
+                <div>ibrahimkhudai03@gmail.com</div>
+              </div>
+              <div className="flex space-x-3">
+                <FaLocationDot size={20}/>
+                <div>Office no. 4, Some Plaza, First Street, Some City </div>
               </div>
             </div>
           </div>

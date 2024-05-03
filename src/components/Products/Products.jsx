@@ -11,6 +11,8 @@ import Img5 from "../../assets/product/p-5.jpg";
 import Img6 from "../../assets/product/p-9.jpg";
 import Img7 from "../../assets/product/p-7.jpg";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import Loading from "../Loader/Loading";
 
 const ProductsData = [
   {
@@ -111,12 +113,13 @@ const Products = () => {
       <div className={`container ${!showRec && 'hidden'}`}>
         {/* Header section */}
         {/* <Heading title="Products Recommendation" subtitle={"Explore Our Products"} /> */}
-        <div className=' items-center flex w-full justify-center  font-regular text-6xl'>Latest Arrival</div>
+        <div className=' items-center flex w-full justify-center  font-regular text-4xl md:text-6xl'>Latest Arrival</div>
           <div className=' items-center flex w-full justify-center opacity-50 text-md mt-2 mb-16'>Discover Our vast catalog of products</div>
         {/* Body section */}
-        <div className="grid grid-cols-3 gap-6 mb-[50px]">
-          {productData.map(e=>
-              (<div className="bg-[#1F2C4A] flex-col flex overflow-hidden rounded-md h-[350px]" key={e.id}>
+        {productData.length !== 0?
+        <div className="space-y-5 md:space-y-0 md:grid grid-cols-3 gap-6 mb-[50px]">
+           {productData.map(e=>
+              (<Link to={`/Product-page/${e.id}`} className="bg-[#1F2C4A] flex-col flex overflow-hidden rounded-md h-[350px]" key={e.id}>
                   <div className="flex-1 overflow-hidden flex justify-center items-center">
                      <img src={e.img} className=' object-cover' alt="Product Image" />
                   </div>
@@ -124,8 +127,10 @@ const Products = () => {
                     <div className="text-3xl font-semibold text-white">{e.title}</div>
                     <div className="text-xl mt-3 opacity-50 font-semibold text-white">${e.price}</div>
                   </div>
-              </div>)
-          )}</div>
+              </Link>)
+          )}
+          </div>
+          : <Loading/>}
         {/* <ProductCard data={productData} /> */}
         {/* <ProductCard data={ProductsData2} /> */}
       </div>
@@ -134,3 +139,5 @@ const Products = () => {
 };
 
 export default Products;
+
+

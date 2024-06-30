@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { IoMdSearch } from "react-icons/io";
 import { FaCaretDown, FaCartShopping } from "react-icons/fa6";
 import DarkMode from "./DarkMode";
@@ -11,6 +11,7 @@ import axios from "axios";
 
 export const verifyUser = async(setSeller)=>{
   // const {setSeller} = useContext(context);
+ 
       try{
         await axios.get(`${import.meta.env.VITE_SERVER_URL}/api/user/verify-user`,{
           headers:{
@@ -34,10 +35,12 @@ const emptyCredentials = ()=>{
 }
 
 const Navbar = ({ handleOrderPopup }) => {
+   const [email, setEmail] = useState(null);
   const {seller,setSeller,orderPopup, setOrderPopup} = useContext(context);
   useEffect(()=>{
     verifyUser(setSeller);
-    console.log(seller)
+    setEmail(localStorage.getItem("Email"));
+    console.log(localStorage.getItem("Email"))
   })
 const MenuLinks = [
   {
@@ -83,7 +86,7 @@ const DropdownLinks = [
           {/* Logo and Links section */}
           <div className="flex items-center gap-4">
             <a
-              href="#"
+              href="/"
               className="text-primary font-semibold tracking-widest text-2xl uppercase sm:text-3xl
 "
             >
@@ -91,7 +94,7 @@ const DropdownLinks = [
             </a>
             <a
               onClick={()=>{navigate('/Login')}}
-              className={`${localStorage.getItem('Email') ? 'hidden': ' px-4'} md:inline-block hidden cursor-pointer font-semibold text-gray-500 hover:text-black dark:hover:text-white duration-200`}
+              className={`${email === 'ibrahimtufail@gmail.com' && 'hidden'} md:inline-block hidden cursor-pointer font-semibold text-gray-500 hover:text-black dark:hover:text-white duration-200`}
             >
               Login
             </a>

@@ -19,7 +19,7 @@ const Slide1 = ({image=slide1,content}) => {
     },[isInView]);
 
   return (
-    <div ref={ref} key={content}  className={`bg-gradient-to-r from-[#F3F6FB] to-[#CBD5EA] dark:from-[#161F32] dark:to-[#1B2740] relative w-full  md:flex-row md:flex justify-between md:px-5 md:h-[90vh] h-[90vh] `}>
+    <div ref={ref} key={content}  className={`bg-gradient-to-r from-[#F3F6FB] to-[#CBD5EA] dark:from-[#161F32] dark:to-[#1B2740] relative w-full  md:flex-row md:flex justify-between md:px-5 md:h-[90vh] h-[70vh] `}>
         <div className='md:1/3 mb-24 md:mb-0 absolute md:relative top-[0px]'>
             <div className='pt-[100px]  md:ml-[80px] ml-12 relative'>
                 <motion.div 
